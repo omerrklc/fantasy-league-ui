@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The League — Fantasy Basketball</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <button class="icon-button" aria-label="Menüyü aç">☰</button>
+        <div class="brand"><span>THE</span> LEAGUE<small>FANTASY BASKETBALL</small></div>
+        <button class="icon-button notification" aria-label="Bildirimler">♧<i></i></button>
+      </header>
+
+      <section class="league-picker" aria-label="Aktif lig">
+        <span class="league-dot"></span>
+        <div><strong>Friday Night League</strong><small>2026 Sezonu · 8 takım</small></div>
+        <span class="chevron">⌄</span>
+      </section>
+
+      <section class="matchup-card panel">
+        <div class="eyebrow">CANLI EŞLEŞME <span>• HAFTA 4</span></div>
+        <div class="matchup-main">
+          <div class="club home"><div class="club-mark blue">ED</div><strong>Eren's<br />Dynasty</strong><b>842</b></div>
+          <div class="versus"><span>KALAN</span><strong>1G 04S</strong><em>VS</em></div>
+          <div class="club away"><div class="club-mark lime">CC</div><strong>Can's<br />Crew</strong><b>816</b></div>
+        </div>
+        <div class="score-line"><i class="home-score"></i><i class="away-score"></i></div>
+        <button class="text-link" data-view="matchups">EŞLEŞME DETAYI <span>→</span></button>
+      </section>
+
+      <section class="derby-card">
+        <div class="derby-copy"><div class="eyebrow">HAFTANIN DERBİSİ</div><h1>Elite Squad <span>vs</span><br />Bucket Getters</h1><p>Cumartesi · 21.00</p></div>
+        <div class="players-art" aria-hidden="true"><div></div><div></div></div>
+      </section>
+
+      <section class="section-heading"><div><span class="eyebrow">LİG HABERLERİ</span><h2>Gündem</h2></div><button class="view-all" data-view="all-news">TÜMÜNÜ GÖR →</button></section>
+      <section id="news-feed" class="news-feed"></section>
+
+      <section class="section-heading standings-heading"><div><span class="eyebrow">SEZON TABLOSU</span><h2>Puan durumu</h2></div><button class="view-all" data-view="teams">TÜM TABLO →</button></section>
+      <section id="standings" class="standings panel"></section>
+
+      <section id="matchups-view" class="view-page" hidden>
+        <div class="page-title"><button class="back-button" data-view="feed">←</button><div><span class="eyebrow">HAFTA 4</span><h1>Eşleşmeler</h1></div></div>
+        <div class="week-switcher" aria-label="Hafta seçimi"><button data-week-direction="previous" aria-label="Önceki hafta">‹</button><strong id="week-label">5 - 11 Ağustos</strong><button data-week-direction="next" aria-label="Sonraki hafta">›</button></div>
+        <div class="match-filter"><button class="selected" data-filter="all">TÜMÜ</button><button data-filter="live">CANLI <span>2</span></button><button data-filter="finished">BİTTİ</button></div>
+        <div id="matchup-list" class="matchup-list"></div>
+      </section>
+
+      <section id="all-news-view" class="view-page" hidden>
+        <div class="page-title"><button class="back-button" data-view="feed">←</button><div><span class="eyebrow">FRIDAY NIGHT LEAGUE</span><h1>Tüm Haberler</h1></div></div>
+        <div class="archive-feature"><span>SON DAKİKA</span><h2>Sezonun ilk büyük takası onaylandı</h2><p>Takımlar yeni kadrolarıyla haftaya hazırlanıyor.</p></div>
+        <div id="all-news-list" class="archive-list"></div>
+      </section>
+
+      <section id="teams-view" class="view-page" hidden>
+        <div class="page-title"><button class="back-button" data-view="feed">←</button><div><span class="eyebrow">2026 SEZONU</span><h1>Tüm Tablo</h1></div></div>
+        <div class="table-summary"><span>8 TAKIM</span><strong>HAFTA 4</strong><span>GALİBİYET ORANI</span></div>
+        <div id="full-standings" class="standings panel full-standings"></div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Ana menü">
+      <button class="nav-item active" data-view="feed"><span>▤</span>Akış</button>
+      <button class="nav-item" data-view="matchups"><span>◉</span>Eşleşmeler</button>
+      <button class="nav-item" data-view="teams"><span>♜</span>Takımlar</button>
+      <button class="nav-item" data-view="more"><span>•••</span>Diğer</button>
+    </nav>
+    <div id="toast" class="toast" role="status"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
