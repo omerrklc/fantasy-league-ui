@@ -6,16 +6,21 @@
     <title>The League — Fantasy Basketball</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <main class="app-shell">
       <header class="topbar">
         <button class="icon-button" aria-label="Menüyü aç">☰</button>
-        <div class="brand"><span>THE</span> LEAGUE<small>FANTASY BASKETBALL</small></div>
-        <button class="icon-button notification" aria-label="Bildirimler">♧<i></i></button>
+        <div class="brand"><span>FANTASY</span> LEAGUE<small>ISTANBUL · 2026</small></div>
+        <button class="icon-button notification" aria-label="Bildirimler">◇<i></i></button>
       </header>
+
+      <div class="arcade-skyline" aria-hidden="true">
+        <span class="moon"></span><i></i><i></i><i></i><i></i><i></i><i></i>
+        <b>BASKETBALL CITY</b>
+      </div>
 
       <section class="league-picker" aria-label="Aktif lig">
         <span class="league-dot"></span>
@@ -66,10 +71,10 @@
     </main>
 
     <nav class="bottom-nav" aria-label="Ana menü">
-      <button class="nav-item active" data-view="feed"><span>▤</span>Akış</button>
-      <button class="nav-item" data-view="matchups"><span>◉</span>Eşleşmeler</button>
-      <button class="nav-item" data-view="teams"><span>♜</span>Takımlar</button>
-      <button class="nav-item" data-view="more"><span>•••</span>Diğer</button>
+      <button class="nav-item active" data-view="feed"><span>▤</span>HABERLER</button>
+      <button class="nav-item" data-view="matchups"><span>▦</span>FİKSTÜR</button>
+      <button class="nav-item" data-view="teams"><span>♜</span>LİG</button>
+      <button class="nav-item" data-view="more"><span>⇄</span>TAKASLAR</button>
     </nav>
     <div id="toast" class="toast" role="status"></div>
     <script src="app.js"></script>
