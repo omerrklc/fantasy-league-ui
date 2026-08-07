@@ -104,3 +104,52 @@ document.querySelectorAll('[data-view]').forEach(button => button.addEventListen
   });
   if (!pageId && view !== 'feed') showToast(view);
 }));
+
+const yahooCard = document.querySelector('#yahoo-sync');
+const yahooTitle = document.querySelector('#yahoo-sync-title');
+const yahooDetail = document.querySelector('#yahoo-sync-detail');
+const yahooButton = document.querySelector('#yahoo-connect');
+
+async function refreshYahooStatus() {
+  try {
+    const response = await fetch('/api/yahoo/status', { cache: 'no-store' });
+    if (!response.ok) throw new Error('backend-offline');
+    const status = await response.json();
+    yahooCard.classList.toggle('connected', status.connected);
+    if (!status.configured) {
+      yahooTitle.textContent = 'Yahoo API anahtarları bekleniyor';
+      yahooDetail.textContent = '.env dosyasına Consumer Key ve Secret eklenmeli.';
+      yahooButton.textContent = 'KURULUM BEKLİYOR'; yahooButton.disabled = true;
+    } else if (!status.connected) {
+      yahooTitle.textContent = 'Yahoo Fantasy bağlantısı hazır';
+      yahooDetail.textContent = 'Komiser hesabıyla güvenli giriş yap.';
+      yahooButton.textContent = "YAHOO'YA BAĞLAN";
+    } else {
+      yahooTitle.textContent = 'Yahoo Fantasy bağlı';
+      yahooDetail.textContent = status.leagueKey ? `Lig: ${status.leagueKey}` : 'Lig anahtarı seçilmeyi bekliyor.';
+      yahooButton.textContent = 'VERİYİ YENİLE';
+    }
+  } catch {
+    const isPublishedDemo = location.hostname.endsWith('github.io') || location.hostname.includes('githack.com');
+    yahooCard.classList.toggle('error', !isPublishedDemo);
+    yahooTitle.textContent = isPublishedDemo ? 'Yahoo entegrasyonu hazırlanıyor' : 'Yahoo backend çevrimdışı';
+    yahooDetail.textContent = isPublishedDemo ? 'API onayı sonrası canlı lig verileri burada görünecek.' : 'Canlı veri için uygulamayı Node sunucusuyla aç.';
+    yahooButton.textContent = isPublishedDemo ? 'YAKINDA' : 'YEREL KURULUM'; yahooButton.disabled = true;
+  }
+}
+
+yahooButton.addEventListener('click', async () => {
+  if (!yahooCard.classList.contains('connected')) return location.assign('/auth/yahoo');
+  yahooButton.textContent = 'SENKRONİZE...';
+  try {
+    const response = await fetch('/api/yahoo/dashboard', { cache: 'no-store' });
+    const payload = await response.json();
+    if (!response.ok) throw new Error(payload.error);
+    yahooDetail.textContent = payload.needsLeagueKey ? 'Yahoo ligleri bulundu; lig anahtarı seçilmeli.' : `Son senkron: ${new Date(payload.syncedAt).toLocaleTimeString('tr-TR')}`;
+    yahooButton.textContent = 'GÜNCEL';
+  } catch (error) {
+    yahooDetail.textContent = error.message; yahooButton.textContent = 'TEKRAR DENE';
+  }
+});
+
+refreshYahooStatus();
