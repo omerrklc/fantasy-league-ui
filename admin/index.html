@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#05000f" />
+    <title>E-MAC — Yönetim</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="admin.css" />
+  </head>
+  <body>
+    <div class="admin-shell">
+      <aside class="sidebar" id="sidebar">
+        <a class="admin-brand" href="#dashboard" aria-label="Yönetim ana sayfası">
+          <span class="brand-ball">◆</span>
+          <span><b>FANTASY BASKETBALL</b><strong>E-MAC</strong><small>YÖNETİM MERKEZİ</small></span>
+        </a>
+
+        <nav class="side-nav" aria-label="Yönetim menüsü">
+          <button class="active" data-page="dashboard"><span>▦</span> Genel Bakış</button>
+          <button data-page="news"><span>▤</span> Haberler <i>6</i></button>
+          <button data-page="editor"><span>✦</span> Yeni Haber</button>
+          <button data-page="visuals"><span>▧</span> Görsel Stüdyo <i>4</i></button>
+          <button data-page="matches"><span>▣</span> Eşleşmeler <i>2</i></button>
+          <button data-page="penalties"><span>!</span> Cezalar</button>
+          <button data-page="settings"><span>⚙</span> Ayarlar</button>
+        </nav>
+
+        <div class="sync-card">
+          <span class="sync-light"></span>
+          <div><b>YAHOO FANTASY</b><small id="sync-copy">API onayı bekleniyor</small></div>
+          <button type="button" id="sync-button" aria-label="Yahoo bağlantı durumu">↻</button>
+        </div>
+        <div class="admin-profile"><span>ÖK</span><div><b>Ömer Kılıç</b><small>Lig yöneticisi</small></div><button aria-label="Profil menüsü">⋮</button></div>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar">
+          <button class="menu-button" id="menu-button" aria-label="Menüyü aç">☰</button>
+          <div><span class="crumb">E-MAC</span><h1 id="page-heading">Genel Bakış</h1></div>
+          <div class="top-actions">
+            <span class="season">2026 SEZONU · HAFTA 4</span>
+            <button class="icon-button" aria-label="Bildirimler">◇<i></i></button>
+            <a class="app-link" href="../index.html" target="_blank">UYGULAMAYI GÖR ↗</a>
+          </div>
+        </header>
+
+        <section class="page active" id="dashboard-page">
+          <div class="welcome-row">
+            <div><span class="kicker">08 AĞU 2026 · CUMARTESİ</span><h2>İyi akşamlar, Ömer.</h2><p>Ligde bugün <b>4 yeni hareket</b> ve devam eden <b>2 canlı eşleşme</b> var.</p></div>
+            <button class="primary-button" data-open-editor>+ YENİ HABER OLUŞTUR</button>
+          </div>
+
+          <div class="metric-grid">
+            <article class="metric-card blue"><span>YAYINDAKİ HABER</span><strong>24</strong><small>+4 bu hafta</small><i>▤</i></article>
+            <article class="metric-card yellow"><span>TASLAKLAR</span><strong id="draft-count">3</strong><small>1'i bugün düzenlendi</small><i>▧</i></article>
+            <article class="metric-card purple"><span>PLANLANAN</span><strong>5</strong><small>Sıradaki · 20.30</small><i>◷</i></article>
+            <article class="metric-card green"><span>CANLI EŞLEŞME</span><strong>2</strong><small>Veriler güncel</small><i>●</i></article>
+          </div>
+
+          <div class="dashboard-grid">
+            <section class="panel activity-panel">
+              <div class="panel-heading"><div><span class="kicker">OTOMATİK AKIŞ</span><h3>Son Gündem</h3></div><button data-page-jump="news">TÜMÜNÜ GÖR →</button></div>
+              <div class="activity-list" id="activity-list"></div>
+            </section>
+
+            <section class="panel quick-panel">
+              <div class="panel-heading"><div><span class="kicker">KONTROL MERKEZİ</span><h3>Hızlı İşlemler</h3></div></div>
+              <div class="quick-grid">
+                <button data-open-editor><span>✦</span><b>Haber oluştur</b><small>AI destekli editör</small></button>
+                <button data-page-jump="visuals"><span>▧</span><b>Görsel üret</b><small>Haber kapağı hazırla</small></button>
+                <button data-demo-action="Ceza formu açıldı"><span>!</span><b>Ceza ekle</b><small>Takım veya oyuncu</small></button>
+                <button data-demo-action="Duyuru taslağı açıldı"><span>⌁</span><b>Duyuru yayınla</b><small>Tüm lige gönder</small></button>
+                <button data-page-jump="matches"><span>▣</span><b>Derbi seç</b><small>Haftanın eşleşmesi</small></button>
+              </div>
+            </section>
+          </div>
+
+          <section class="panel matches-panel">
+            <div class="panel-heading"><div><span class="kicker">HAFTA 4</span><h3>Haftanın Eşleşmeleri</h3></div><button data-page-jump="matches">FİKSTÜRÜ YÖNET →</button></div>
+            <div class="match-row">
+              <article><div><span class="team-mark blue-mark">ED</span><b>Eren's Dynasty</b></div><strong>842 <i>—</i> 816</strong><div><b>Can's Crew</b><span class="team-mark pink-mark">CC</span></div><small class="live-dot">CANLI</small></article>
+              <article><div><span class="team-mark purple-mark">ES</span><b>Elite Squad</b></div><strong>774 <i>—</i> 801</strong><div><b>Bucket Getters</b><span class="team-mark yellow-mark">BG</span></div><small class="live-dot">CANLI</small></article>
+              <article><div><span class="team-mark cyan-mark">CK</span><b>Court Kings</b></div><strong>928 <i>—</i> 887</strong><div><b>Triple Double</b><span class="team-mark red-mark">TD</span></div><small>TAMAMLANDI</small></article>
+            </div>
+          </section>
+        </section>
+
+        <section class="page" id="news-page">
+          <div class="page-toolbar"><div><span class="kicker">İÇERİK MERKEZİ</span><h2>Lig Haberleri</h2><p>Yayınları, taslakları ve planlanan içerikleri tek yerden yönet.</p></div><button class="primary-button" data-open-editor>+ YENİ HABER</button></div>
+          <div class="filter-bar"><button class="selected" data-news-filter="all">TÜMÜ <b>32</b></button><button data-news-filter="published">YAYINDA <b>24</b></button><button data-news-filter="draft">TASLAK <b>3</b></button><button data-news-filter="scheduled">PLANLANAN <b>5</b></button><input id="news-search" type="search" placeholder="Haberlerde ara..." /></div>
+          <section class="panel news-table"><div class="table-head"><span>HABER</span><span>KATEGORİ</span><span>DURUM</span><span>TARİH</span><span></span></div><div id="news-rows"></div></section>
+        </section>
+
+        <section class="page" id="editor-page">
+          <div class="editor-header"><button class="back-link" data-page-jump="dashboard">← PANELE DÖN</button><div><span class="kicker">İÇERİK STÜDYOSU</span><h2>Yeni Haber Oluştur</h2></div><span class="autosave" id="autosave-state">● DEĞİŞİKLİKLER KAYDEDİLDİ</span></div>
+          <div class="editor-layout">
+            <div class="editor-column">
+              <section class="panel editor-panel">
+                <div class="step-heading"><span>01</span><div><h3>Haberin kaynağı</h3><p>Lig hareketini seç veya özel bir haber yaz.</p></div></div>
+                <div class="source-tabs"><button class="selected" data-source="transaction">TAKAS / HAMLE</button><button data-source="match">EŞLEŞME</button><button data-source="penalty">CEZA</button><button data-source="custom">ÖZEL HABER</button></div>
+                <label class="field-label" for="event-select">LİG HAREKETİ</label>
+                <select id="event-select"><option>Elite Squad, Luka Dončić'i kadrosuna kattı</option><option>Eren's Dynasty 842 - 816 Can's Crew</option><option>Bucket Getters'a kadro ihlali cezası</option><option>Haftanın derbisi: Elite Squad vs Bucket Getters</option></select>
+                <button class="ai-button" id="ai-draft"><span>✦</span><b>AI İLE HABER TASLAĞI OLUŞTUR</b><small>Seçilen hareketten başlık ve metin hazırlar</small></button>
+              </section>
+
+              <section class="panel editor-panel">
+                <div class="step-heading"><span>02</span><div><h3>Haberi düzenle</h3><p>Uygulamada yayınlanacak içeriği son haline getir.</p></div></div>
+                <label class="field-label" for="news-title">BAŞLIK <i id="title-count">0/72</i></label>
+                <input id="news-title" maxlength="72" value="Elite Squad'dan gecenin bombası: Dončić kadroda!" />
+                <label class="field-label" for="news-body">HABER METNİ <i id="body-count">0/320</i></label>
+              <textarea id="news-body" maxlength="320" rows="6">E-MAC'te gecenin en büyük hamlesi Elite Squad'dan geldi. Takım, yıldız oyuncu Luka Dončić'i kadrosuna kattığını açıkladı. Bu transferin haftanın derbisi öncesinde dengeleri değiştirmesi bekleniyor.</textarea>
+                <div class="editor-split"><label><span class="field-label">KATEGORİ</span><select id="category"><option>Son Dakika</option><option>Takas Merkezi</option><option>Maç Merkezi</option><option>Lig Ofisi</option></select></label><label><span class="field-label">YAZAR</span><select><option>Lig Merkezi</option><option>Komiserlik</option></select></label></div>
+              </section>
+
+              <section class="panel editor-panel">
+                <div class="step-heading"><span>03</span><div><h3>Kapak görseli</h3><p>Haberi öne çıkaracak görseli belirle.</p></div></div>
+                <div class="cover-options">
+                  <button class="cover-option active" data-cover="photo"><span class="cover-art photo-cover"></span><b>AI OYUNCU KAPAĞI</b></button>
+                  <button class="cover-option" data-cover="trade"><span class="cover-art trade-cover">LD</span><b>TAKAS GECESİ</b></button>
+                  <button class="cover-option" data-cover="match"><span class="cover-art match-cover">VS</span><b>MAÇ GÜNÜ</b></button>
+                  <button class="cover-option" data-cover="breaking"><span class="cover-art breaking-cover">!</span><b>SON DAKİKA</b></button>
+                  <button class="cover-option upload-cover" data-demo-action="Görsel yükleme penceresi açıldı"><span>＋</span><b>GÖRSEL YÜKLE</b></button>
+                  <button class="cover-option studio-cover" data-page-jump="visuals"><span>✦</span><b>YENİ GÖRSEL ÜRET</b></button>
+                </div>
+              </section>
+              <div class="publish-bar"><button class="secondary-button" id="save-draft">TASLAK KAYDET</button><button class="secondary-button" id="schedule-news">◷ ZAMANLA</button><button class="primary-button" id="publish-news">HABERİ YAYINLA →</button></div>
+            </div>
+
+            <aside class="preview-column">
+              <div class="preview-heading"><div><span class="kicker">CANLI ÖN İZLEME</span><h3>Uygulamada görünüm</h3></div><span>MOBİL</span></div>
+              <div class="phone-frame">
+                <div class="phone-status"><b>12:34</b><span>▮▮▮ 100%</span></div>
+                <div class="phone-brand">FANTASY BASKETBALL <b>E-MAC</b><small>ISTANBUL · 2026</small></div>
+                <div class="preview-cover photo-cover" id="preview-cover"><span id="preview-category">SON DAKİKA</span><b id="cover-monogram"></b></div>
+                <article class="preview-story"><span class="story-category" id="preview-category-copy">SON DAKİKA</span><h4 id="preview-title"></h4><p id="preview-body"></p><div><span class="avatar">FL</span><b>LİG MERKEZİ</b><small>ŞİMDİ</small></div></article>
+                <div class="phone-nav"><span>▤<small>HABERLER</small></span><span>▣<small>FİKSTÜR</small></span><span>♜<small>LİG</small></span><span>⇄<small>TAKASLAR</small></span></div>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="page" id="visuals-page">
+          <div class="page-toolbar visual-toolbar"><div><span class="kicker">AI İÇERİK SİSTEMİ</span><h2>Haber Görselleri</h2><p>Haber türüne uygun kapak üret, arşivle ve doğrudan editöre gönder.</p></div><span class="credit-chip">BU AY · 24/100 ÜRETİM</span></div>
+          <div class="visual-studio-grid">
+            <section class="panel generator-panel">
+              <div class="panel-heading"><div><span class="kicker">GÖRSEL ÜRETİCİ</span><h3>Yeni kapak hazırla</h3></div><span class="ai-badge">✦ AI</span></div>
+              <div class="generator-body">
+                <label class="field-label" for="visual-type">HABER TÜRÜ</label>
+                <div class="visual-type-grid" id="visual-types">
+                  <button class="selected" data-visual-type="transfer"><span>⇄</span><b>TAKAS / TRANSFER</b></button>
+                  <button data-visual-type="match"><span>▣</span><b>MAÇ / DERBİ</b></button>
+                  <button data-visual-type="penalty"><span>!</span><b>CEZA / DUYURU</b></button>
+                  <button data-visual-type="performance"><span>★</span><b>PERFORMANS</b></button>
+                </div>
+                <div class="visual-form-grid">
+                  <label><span class="field-label">OYUNCU</span><select id="visual-player"><option>Luka Dončić</option><option>Shai Gilgeous-Alexander</option><option>Nikola Jokić</option><option>Stephen Curry</option><option>Oyuncusuz tasarım</option></select></label>
+                  <label><span class="field-label">TAKIM RENGİ</span><select id="visual-color"><option>Mavi + Mor</option><option>Sarı + Mor</option><option>Kırmızı + Lacivert</option><option>Takım renklerini kullan</option></select></label>
+                </div>
+                <label class="field-label" for="visual-prompt">GÖRSEL AÇIKLAMASI</label>
+                <textarea id="visual-prompt" rows="4">Gece oynanan büyük transfer haberi. Oyuncu sağ tarafta, başlık için sol tarafta boş alan. Dramatik arena ışıkları ve uygulamanın neon piksel detayları.</textarea>
+                <div class="generator-options"><label><input type="checkbox" checked /> Uygulama temasını uygula</label><label><input type="checkbox" checked /> Başlık için boş alan bırak</label><label><input type="checkbox" /> Oyuncu adını görsele yaz</label></div>
+                <button class="generate-button" id="generate-visual"><span>✦</span><div><b>HABER GÖRSELİNİ ÜRET</b><small>Yaklaşık 20–40 saniye</small></div><i>→</i></button>
+                <div class="generation-progress" id="generation-progress" hidden><span><i></i></span><b>Görsel hazırlanıyor...</b><small id="generation-step">Kompozisyon oluşturuluyor</small></div>
+              </div>
+            </section>
+
+            <section class="panel result-panel">
+              <div class="panel-heading"><div><span class="kicker">SONUÇ</span><h3>Kapak ön izlemesi</h3></div><button id="download-visual">İNDİR ↓</button></div>
+              <div class="visual-result photo-cover" id="visual-result"><span>AI GENERATED</span><div><small>SON DAKİKA</small><h3 id="visual-result-title">GECENİN<br />BOMBASI</h3><p>E-MAC</p></div></div>
+              <div class="result-actions"><button class="secondary-button" id="regenerate-visual">↻ TEKRAR ÜRET</button><button class="primary-button" id="use-visual">HABERDE KULLAN →</button></div>
+            </section>
+          </div>
+
+          <section class="panel library-panel">
+            <div class="panel-heading"><div><span class="kicker">MEDYA ARŞİVİ</span><h3>Son üretilen görseller</h3></div><div class="library-filters"><button class="selected">TÜMÜ</button><button>TAKAS</button><button>MAÇ</button><button>DUYURU</button></div></div>
+            <div class="visual-library">
+              <article class="selected"><div class="library-art photo-cover"><span>SON DAKİKA</span></div><b>Dončić kadroda</b><small>Bugün · 19.22</small><button data-use-library="photo">KULLAN</button></article>
+              <article><div class="library-art match-cover"><strong>VS</strong></div><b>Haftanın derbisi</b><small>Bugün · 16.08</small><button data-use-library="match">KULLAN</button></article>
+              <article><div class="library-art breaking-cover"><strong>!</strong></div><b>Komiserlik kararı</b><small>Dün · 21.14</small><button data-use-library="breaking">KULLAN</button></article>
+              <article><div class="library-art trade-cover"><strong>⇄</strong></div><b>Sezonun ilk takası</b><small>Dün · 14.37</small><button data-use-library="trade">KULLAN</button></article>
+            </div>
+          </section>
+        </section>
+
+        <section class="page placeholder-page" id="matches-page"><span>▣</span><h2>Eşleşme Yönetimi</h2><p>Yahoo bağlantısı tamamlanınca canlı skor, fikstür ve haftanın derbisi buradan yönetilecek.</p><button data-page-jump="dashboard" class="secondary-button">PANELE DÖN</button></section>
+        <section class="page placeholder-page" id="penalties-page"><span>!</span><h2>Ceza Merkezi</h2><p>Takım ve oyuncu cezaları için yönetim ekranı sıradaki aşamada eklenecek.</p><button data-page-jump="dashboard" class="secondary-button">PANELE DÖN</button></section>
+        <section class="page placeholder-page" id="settings-page"><span>⚙</span><h2>Lig Ayarları</h2><p>Yahoo bağlantısı, yetkiler ve bildirim ayarları burada olacak.</p><button data-page-jump="dashboard" class="secondary-button">PANELE DÖN</button></section>
+      </main>
+    </div>
+    <div class="toast" id="toast" role="status"></div>
+    <script src="admin.js"></script>
+  </body>
+</html>

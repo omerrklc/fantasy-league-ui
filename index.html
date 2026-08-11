@@ -3,18 +3,63 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>The League — Fantasy Basketball</title>
+    <meta name="theme-color" content="#05000f" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="E-MAC" />
+    <title>E-MAC — Fantasy Basketball</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="assets/icons/icon-192.png" />
+    <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=25" />
+    <link rel="stylesheet" href="emac.css?v=25" />
+    <link rel="stylesheet" href="emac-reference.css?v=25" />
   </head>
   <body>
+    <div class="app-splash" id="app-splash" aria-label="Uygulama açılıyor">
+      <div class="splash-logo"><img src="assets/icons/icon-192.png" alt="" /><small>FANTASY BASKETBALL</small><strong>E-MAC</strong><b>ISTANBUL · 2026</b></div>
+      <div class="splash-loader"><i></i></div>
+      <span>OYUN YÜKLENİYOR...</span>
+    </div>
+    <div class="offline-banner" id="offline-banner" hidden><span>!</span><div><b>ÇEVRİMDIŞISIN</b><small>Son kaydedilen veriler gösteriliyor</small></div></div>
+    <div class="pull-refresh" id="pull-refresh"><span>↻</span><b>YENİLEMEK İÇİN ÇEK</b></div>
+    <section class="auth-screen" id="auth-screen" hidden>
+      <div class="auth-stars" aria-hidden="true">+　·　+　·　+　·　+</div>
+      <div class="auth-card">
+        <div class="auth-brand"><span>◆</span><div><small>FANTASY BASKETBALL</small><strong>E-MAC</strong><b>ISTANBUL · 2026</b></div></div>
+        <div class="auth-copy"><span class="eyebrow">TAKIMINA GERİ DÖN</span><h1>Oyuna giriş yap</h1><p>Lig haberleri, eşleşmeler ve takasların tek yerde.</p></div>
+        <button class="yahoo-login-button" id="yahoo-login-button" type="button"><span>Y!</span><div><b>YAHOO İLE DEVAM ET</b><small>Fantasy hesabını güvenle bağla</small></div><i>→</i></button>
+        <p class="yahoo-login-note" id="yahoo-login-note" hidden></p>
+        <div class="auth-divider"><i></i><span>VEYA E-POSTA İLE</span><i></i></div>
+        <div class="auth-tabs"><button class="selected" data-auth-tab="login">GİRİŞ YAP</button><button data-auth-tab="register">HESAP OLUŞTUR</button></div>
+        <form class="auth-form active" id="login-form" data-auth-form="login">
+          <label>E-POSTA<input id="login-email" type="email" autocomplete="email" value="eren@fridayleague.com" required /></label>
+          <label>ŞİFRE<span class="password-field"><input id="login-password" type="password" autocomplete="current-password" value="fantasy2026" minlength="6" required /><button type="button" data-toggle-password="login-password">GÖR</button></span></label>
+          <div class="auth-form-row"><label class="remember-user"><input id="remember-user" type="checkbox" checked /> Beni hatırla</label><button type="button" id="forgot-password">ŞİFREMİ UNUTTUM</button></div>
+          <button class="auth-submit" type="submit">LİGE GİR →</button>
+          <button class="demo-login" type="button" id="demo-login">DEMO HESAPLA DEVAM ET</button>
+        </form>
+        <form class="auth-form" id="register-form" data-auth-form="register" hidden>
+          <div class="auth-double"><label>AD SOYAD<input id="register-name" autocomplete="name" placeholder="Adın ve soyadın" required /></label><label>TAKIM ADI<input id="register-team" placeholder="Örn. Court Kings" required /></label></div>
+          <label>E-POSTA<input id="register-email" type="email" autocomplete="email" placeholder="ornek@email.com" required /></label>
+          <label>ŞİFRE<span class="password-field"><input id="register-password" type="password" autocomplete="new-password" placeholder="En az 6 karakter" minlength="6" required /><button type="button" data-toggle-password="register-password">GÖR</button></span></label>
+          <label>LİG DAVET KODU<input id="invite-code" maxlength="12" value="EMAC-2026" required /><small>Bu kodu lig yöneticisinden alabilirsin.</small></label>
+          <label class="auth-consent"><input id="auth-consent" type="checkbox" required /> Lig kurallarını ve kullanım koşullarını kabul ediyorum.</label>
+          <button class="auth-submit" type="submit">HESAP OLUŞTUR →</button>
+        </form>
+        <p class="auth-security">▣ Şifreli ve güvenli oturum</p>
+      </div>
+    </section>
+
     <main class="app-shell">
       <header class="topbar">
-        <button class="icon-button" aria-label="Menüyü aç">☰</button>
-        <div class="brand"><span>FANTASY</span> LEAGUE<small>ISTANBUL · 2026</small></div>
-        <button class="icon-button notification" aria-label="Bildirimler">◇<i></i></button>
+        <button class="icon-button profile-trigger" data-view="profile" aria-label="Profili aç"><span id="header-user-initials">ED</span></button>
+        <div class="brand"><span>FANTASY BASKETBALL</span> E-MAC<small>ISTANBUL · 2026</small></div>
+        <button class="icon-button notification" data-view="notifications" aria-label="Bildirimler">◇<i></i><b id="notification-badge">4</b></button>
       </header>
 
       <div class="arcade-skyline" aria-hidden="true">
@@ -24,7 +69,7 @@
 
       <section class="league-picker" aria-label="Aktif lig">
         <span class="league-dot"></span>
-        <div><strong>Friday Night League</strong><small>2026 Sezonu · 8 takım</small></div>
+        <div><strong>E-MAC</strong><small>2026 Sezonu · 8 takım</small></div>
         <span class="chevron">⌄</span>
       </section>
 
@@ -45,7 +90,7 @@
           <div class="club away"><div class="club-mark lime">CC</div><strong>Can's<br />Crew</strong><b>816</b></div>
         </div>
         <div class="score-line"><i class="home-score"></i><i class="away-score"></i></div>
-        <button class="text-link" data-view="matchups">EŞLEŞME DETAYI <span>→</span></button>
+        <button class="text-link" data-view="live">CANLI MERKEZE GİT <span>→</span></button>
       </section>
 
       <section class="derby-card">
@@ -66,8 +111,42 @@
         <div id="matchup-list" class="matchup-list"></div>
       </section>
 
+      <section id="live-view" class="view-page" hidden>
+        <div class="page-title live-page-title"><button class="back-button" data-view="matchups">←</button><div><span class="eyebrow">HAFTA 4 · CANLI</span><h1>Fantasy Merkezi</h1></div><button class="live-pause-button" id="live-pause-button"><i></i><span>DURAKLAT</span></button></div>
+        <div class="live-source" id="live-source"><span class="live-pulse"></span><div><b>CANLI VERİ AKIŞI</b><small id="live-source-copy">Demo modu · Yahoo bağlantısı bekleniyor</small></div><strong id="live-updated-at">ŞİMDİ</strong></div>
+        <section class="live-scoreboard panel">
+          <div class="live-week"><span>PAZARTESİ</span><i></i><b>KALAN · 1G 04S</b></div>
+          <div class="live-score-main">
+            <div class="live-team"><span class="live-team-mark home-live-mark">ED</span><h2>Eren's Dynasty</h2><strong id="live-home-score">842.0</strong><small><i></i> 5 OYUNCU AKTİF</small></div>
+            <div class="live-versus"><span>CANLI</span><b>VS</b><small>12 / 18<br />OYUNCU TAMAMLADI</small></div>
+            <div class="live-team away-live-team"><span class="live-team-mark away-live-mark">CC</span><h2>Can's Crew</h2><strong id="live-away-score">816.0</strong><small><i></i> 4 OYUNCU AKTİF</small></div>
+          </div>
+          <div class="live-lead"><span id="live-lead-copy">Eren's Dynasty +26.0</span><div><i id="live-lead-bar"></i></div><b id="live-win-chance">%64 KAZANMA ŞANSI</b></div>
+        </section>
+
+        <section class="live-categories panel">
+          <div class="live-section-heading"><div><span class="eyebrow">KATEGORİ DURUMU</span><h2>5 - 3 ÖNDESİN</h2></div><span>H2H · 9 CAT</span></div>
+          <div class="category-grid" id="live-category-grid"></div>
+        </section>
+
+        <div class="live-tabs"><button class="selected" data-live-tab="players">OYUNCULAR</button><button data-live-tab="timeline">CANLI AKIŞ <span id="live-event-count">4</span></button><button data-live-tab="remaining">KALANLAR</button></div>
+        <section class="live-tab-panel" data-live-panel="players">
+          <div class="live-section-heading"><div><span class="eyebrow">SAHADA</span><h2>Aktif oyuncular</h2></div><span id="active-games-count">9 OYUNCU</span></div>
+          <div id="live-player-list" class="live-player-list"></div>
+        </section>
+        <section class="live-tab-panel" data-live-panel="timeline" hidden>
+          <div class="live-section-heading"><div><span class="eyebrow">ANLIK GÜNCELLEME</span><h2>Fantasy akışı</h2></div><span>AUTO</span></div>
+          <div id="live-timeline" class="live-timeline"></div>
+        </section>
+        <section class="live-tab-panel" data-live-panel="remaining" hidden>
+          <div class="live-section-heading"><div><span class="eyebrow">BU HAFTA</span><h2>Kalan oyuncular</h2></div><span>5 - 4</span></div>
+          <div id="remaining-player-list" class="remaining-player-list"></div>
+        </section>
+        <p class="live-data-note">Canlı değerler şu an arayüz testi için simüle ediliyor. Yahoo API bağlandığında skorlar, oyuncular ve kategoriler otomatik olarak gerçek veriye geçecek.</p>
+      </section>
+
       <section id="all-news-view" class="view-page" hidden>
-        <div class="page-title"><button class="back-button" data-view="feed">←</button><div><span class="eyebrow">FRIDAY NIGHT LEAGUE</span><h1>Tüm Haberler</h1></div></div>
+        <div class="page-title"><button class="back-button" data-view="feed">←</button><div><span class="eyebrow">E-MAC</span><h1>Tüm Haberler</h1></div></div>
         <div class="archive-feature"><span>SON DAKİKA</span><h2>Sezonun ilk büyük takası onaylandı</h2><p>Takımlar yeni kadrolarıyla haftaya hazırlanıyor.</p></div>
         <div id="all-news-list" class="archive-list"></div>
       </section>
@@ -77,15 +156,163 @@
         <div class="table-summary"><span>8 TAKIM</span><strong>HAFTA 4</strong><span>GALİBİYET ORANI</span></div>
         <div id="full-standings" class="standings panel full-standings"></div>
       </section>
+
+      <section id="trades-view" class="view-page" hidden>
+        <div class="page-title trades-title"><button class="back-button" data-view="feed">←</button><div><span class="eyebrow">E-MAC</span><h1>Takas Merkezi</h1></div><button class="new-trade-button" id="new-trade-button" data-view="trade-compose">＋ TEKLİF</button></div>
+        <div class="trade-summary panel"><div><span>⇄</span><p><b>TAKAS DÖNEMİ AÇIK</b><small>Son tarih · 28 Şubat 2027</small></p></div><strong><i></i> 3 AKTİF TEKLİF</strong></div>
+        <div class="trade-tabs"><button class="selected" data-trade-filter="all">TÜMÜ</button><button data-trade-filter="incoming">GELEN <span>1</span></button><button data-trade-filter="review">İNCELEMEDE</button><button data-trade-filter="finished">SONUÇLANDI</button></div>
+        <div id="trade-list" class="trade-list"></div>
+        <button class="trade-fab" id="trade-fab" data-view="trade-compose">＋ YENİ TAKAS TEKLİFİ</button>
+      </section>
+
+      <section id="trade-compose-view" class="view-page" hidden>
+        <div class="page-title"><button class="back-button" data-view="trades">←</button><div><span class="eyebrow">TAKAS MERKEZİ</span><h1>Yeni Teklif</h1></div></div>
+        <div class="compose-progress"><span class="active">1</span><i></i><span>2</span><i></i><span>3</span></div>
+        <section class="trade-builder panel">
+          <div class="builder-heading"><span class="eyebrow">TAKAS ORTAĞI</span><h2>Teklif göndereceğin takımı seç</h2></div>
+          <label class="trade-select-label">RAKİP TAKIM<select id="trade-team"><option>Elite Squad</option><option>Bucket Getters</option><option>Court Kings</option><option>Can's Crew</option></select></label>
+          <div class="trade-builder-grid">
+            <div class="trade-pick"><span class="trade-side-label">SEN GÖNDERİYORSUN</span><button class="player-select" id="send-player"><span class="player-avatar blue-player">JT</span><div><b>Jayson Tatum</b><small>SF · BOS · 46.8 FP</small></div><i>⌄</i></button><button class="add-player" data-trade-add="send">＋ OYUNCU EKLE</button></div>
+            <div class="trade-swap-icon">⇄</div>
+            <div class="trade-pick"><span class="trade-side-label">SEN ALIYORSUN</span><button class="player-select" id="receive-player"><span class="player-avatar yellow-player">SC</span><div><b>Stephen Curry</b><small>PG · GSW · 44.2 FP</small></div><i>⌄</i></button><button class="add-player" data-trade-add="receive">＋ OYUNCU EKLE</button></div>
+          </div>
+          <label class="trade-note-label">TEKLİF NOTU<textarea id="trade-note" maxlength="140" rows="3" placeholder="Rakip takım sahibine bir not yaz..."></textarea><small><span id="trade-note-count">0</span>/140</small></label>
+        </section>
+        <section class="trade-value panel"><div><span>TAKAS DENGESİ</span><strong>DENGELİ</strong></div><div class="value-bar"><i></i><b></b></div><p><span>46.8 FP</span> Her iki taraf için makul bir teklif <span>44.2 FP</span></p></section>
+        <button class="send-trade-button" id="send-trade">TAKAS TEKLİFİNİ GÖNDER →</button>
+      </section>
+
+      <section id="notifications-view" class="view-page" hidden>
+        <div class="page-title notification-title"><button class="back-button" data-view="feed">←</button><div><span class="eyebrow">E-MAC</span><h1>Bildirimler</h1></div><button class="notification-settings-button" id="notification-settings-button" aria-label="Bildirim ayarları">⚙</button></div>
+        <div class="notification-actions"><div class="notification-filters"><button class="selected" data-notification-filter="all">TÜMÜ</button><button data-notification-filter="unread">OKUNMAMIŞ <span id="unread-filter-count">4</span></button></div><button id="mark-all-read">TÜMÜNÜ OKU ✓</button></div>
+        <section class="notification-preferences panel" id="notification-preferences" hidden>
+          <div><span class="eyebrow">BİLDİRİM AYARLARI</span><h2>Nelerden haberdar olacaksın?</h2></div>
+          <label><span><b>Takas hareketleri</b><small>Yeni teklifler ve komiser kararları</small></span><input type="checkbox" data-notification-setting="trade" checked /><i></i></label>
+          <label><span><b>Canlı eşleşmeler</b><small>Maç başlangıcı ve skor değişimleri</small></span><input type="checkbox" data-notification-setting="match" checked /><i></i></label>
+          <label><span><b>Lig haberleri</b><small>Son dakika ve önemli duyurular</small></span><input type="checkbox" data-notification-setting="news" checked /><i></i></label>
+          <label><span><b>Ceza ve kadro uyarıları</b><small>Son tarih ve kadro ihlalleri</small></span><input type="checkbox" data-notification-setting="warning" checked /><i></i></label>
+        </section>
+        <div class="notification-day"><span>BUGÜN</span><i></i></div>
+        <div id="notification-list" class="notification-list"></div>
+      </section>
+
+      <section id="champions-view" class="view-page champions-view" hidden>
+        <div class="champions-topline"><span>E-MAC</span><b>ŞAMPİYONLAR</b><i>P175</i></div>
+        <div class="champion-skyline" aria-hidden="true">
+          <svg viewBox="0 0 390 170" shape-rendering="geometricPrecision">
+            <g class="sky-stars">
+              <path d="M28 20h3v5h5v3h-5v5h-3v-5h-5v-3h5zM270 16h3v6h6v3h-6v6h-3v-6h-6v-3h6zM352 29h2v4h4v2h-4v4h-2v-4h-4v-2h4z" />
+              <rect x="68" y="16" width="3" height="3"/><rect x="115" y="30" width="4" height="4"/><rect x="226" y="38" width="3" height="3"/><rect x="316" y="11" width="3" height="3"/>
+            </g>
+            <path class="sky-moon" d="M91 25h6v4h-3v9h3v4h-6v-3h-4V28h4z"/>
+            <g class="bridge">
+              <path class="neon-line" d="M3 103h121M14 61h12v42H14zm72 0h12v42H86zM9 70c21 0 27-26 39-26s20 26 43 26 23-18 33-18"/>
+              <path class="purple-line" d="M20 65v38M92 65v38M28 66l-5 37M36 58l-7 45M45 48l-8 55M55 49l8 54M65 58l6 45M75 66l4 37M101 66l5 37M111 58l3 45"/>
+              <rect class="city-gold" x="8" y="101" width="111" height="4"/><rect class="city-blue" x="18" y="81" width="3" height="3"/><rect class="city-blue" x="91" y="78" width="3" height="3"/>
+            </g>
+            <g class="ferry ferry-one"><path d="M96 100h40l-5 7h-30z"/><rect x="106" y="94" width="20" height="6"/><rect x="111" y="90" width="10" height="4"/><rect x="102" y="98" width="4" height="2"/></g>
+            <g class="maiden-tower">
+              <rect x="159" y="63" width="26" height="40"/><path d="M155 63h34l-6-8h-22zM163 54h18l-4-8h-10z"/><rect x="169" y="40" width="5" height="7"/><rect x="171" y="29" width="2" height="12"/>
+              <path class="flag" d="M173 29h13v7h-13z"/><circle cx="178" cy="32" r="2"/><rect class="window" x="165" y="70" width="5" height="8"/><rect class="window" x="175" y="70" width="5" height="8"/><rect class="window" x="168" y="87" width="7" height="10"/>
+              <rect class="city-gold" x="151" y="102" width="44" height="4"/>
+            </g>
+            <g class="ferry ferry-two"><path d="M204 101h48l-6 7h-36z"/><rect x="215" y="94" width="25" height="7"/><rect x="223" y="89" width="8" height="5"/><rect x="211" y="98" width="4" height="2"/></g>
+            <g class="mosque">
+              <path class="dome" d="M278 82c0-17 13-30 31-30s31 13 31 30z"/><rect x="277" y="81" width="64" height="23"/><path class="mini-dome" d="M266 88c0-9 7-16 16-16s16 7 16 16zm58 0c0-9 7-16 16-16s16 7 16 16z"/>
+              <g class="minaret"><rect x="261" y="43" width="5" height="61"/><path d="M259 43h9l-4-15z"/><rect x="257" y="54" width="13" height="4"/><rect x="354" y="37" width="5" height="67"/><path d="M352 37h9l-4-16z"/><rect x="350" y="50" width="13" height="4"/><rect x="370" y="50" width="4" height="54"/><path d="M368 50h8l-4-14z"/></g>
+              <rect class="window" x="289" y="87" width="5" height="9"/><rect class="window" x="306" y="87" width="5" height="9"/><rect class="window" x="323" y="87" width="5" height="9"/>
+              <path class="crescent" d="M307 44h5v3h-2v5h2v3h-5v-2h-3v-7h3z"/>
+            </g>
+            <g class="emac-hoop"><rect x="244" y="48" width="3" height="31"/><rect x="231" y="48" width="15" height="12"/><path d="M233 62h11l-3 7h-5z"/><circle cx="237" cy="42" r="5"/></g>
+            <g class="water-lines"><path d="M0 111h390M8 119h73m9 0h58m12 0h87m11 0h118M0 128h45m12 0h89m17 0h58m13 0h156M15 138h105m17 0h92m13 0h126M0 150h64m17 0h84m20 0h47m14 0h128"/><path class="reflection" d="M18 115h82M153 115h43M278 115h84M31 133h54M160 133h27M291 133h54M44 145h33M166 145h16M304 145h29"/></g>
+          </svg>
+        </div>
+        <header class="champions-hero">
+          <span class="eyebrow">E-MAC TARİHİ</span>
+          <h1>CHAMPIONS<br />OF E-MAC</h1>
+          <p>Ligin geçmiş sezon şampiyonları</p>
+        </header>
+        <div class="champion-trophy" aria-hidden="true"><i>❧</i><strong>♛</strong><i>❧</i></div>
+        <div class="champions-list" id="champions-list"></div>
+        <div class="champion-footer-mark" aria-hidden="true"><i>❧</i><strong>★</strong><i>❧</i></div>
+      </section>
+
+      <section id="avatar-view" class="view-page avatar-view" hidden>
+        <div class="page-title"><button class="back-button" data-view="profile">←</button><div><span class="eyebrow">E-MAC KADRO+</span><h1>Premium Avatarlar</h1></div></div>
+        <section class="avatar-studio-hero panel">
+          <div class="avatar-preview-stage"><span>SEÇİLİ PORTRE</span><div id="avatar-studio-preview" class="avatar-studio-preview"></div><small>ORİJİNAL E-MAC KOLEKSİYONU</small></div>
+          <div class="avatar-studio-copy"><span class="eyebrow">HAZIR PREMIUM KATALOG</span><h2>Tarzını seç</h2><p>Her portre tek tek hazırlanmış bitmiş bir karakterdir. Beğendiğin takım sahibini seç ve profilinde kullan.</p><div class="catalog-selection-meta"><span id="avatar-selection-code">AVATAR A</span><b id="avatar-selection-name">STRATEJİST</b></div></div>
+        </section>
+        <section class="avatar-catalog-panel panel" aria-labelledby="avatar-catalog-title">
+          <div class="avatar-catalog-heading"><div><span class="eyebrow">KOLEKSİYON 01 + 02</span><h2 id="avatar-catalog-title">PORTRE KOLEKSİYONU</h2></div><span>16 / 16 AÇIK</span></div>
+          <div class="avatar-catalog-grid" id="avatar-catalog-grid"></div>
+        </section>
+        <div class="avatar-actions"><button id="random-avatar" type="button">↻ RASTGELE SEÇ</button><button id="save-avatar" type="button">BU AVATARI KULLAN →</button></div>
+      </section>
+
+      <section id="roster-view" class="view-page roster-view" hidden>
+        <div class="page-title roster-page-title"><div><span class="eyebrow">E-MAC FANTASY</span><h1>Kadrom</h1></div><button class="roster-more" type="button" aria-label="Kadro seçenekleri">•••</button></div>
+        <section class="roster-team-hero panel">
+          <div class="roster-team-mark" id="roster-team-mark">ED</div>
+          <div><span class="roster-owner-label">TAKIMIM</span><h2 id="roster-team-name">Eren's Dynasty</h2><p><i></i><span id="roster-player-count">13 oyuncu</span> · Hafta 4</p></div>
+          <span class="roster-rank"><small>LİG</small><b>#1</b></span>
+        </section>
+        <div class="roster-sync-note"><span>Y!</span><div><b>YAHOO BAĞLANTISI BEKLENİYOR</b><small>Şimdilik örnek kadro gösteriliyor; bağlantı sonrası otomatik güncellenecek.</small></div></div>
+        <section class="roster-summary panel">
+          <div><small>HAFTA PUANI</small><strong>842.4</strong><em>+26.1</em></div>
+          <div><small>KALAN MAÇ</small><strong>7</strong><em>BUGÜN</em></div>
+          <div><small>KADRO DURUMU</small><strong>12/13</strong><em class="warning">1 UYARI</em></div>
+        </section>
+        <div class="roster-filter" role="tablist" aria-label="Kadro filtresi">
+          <button class="selected" data-roster-filter="all" role="tab" aria-selected="true">TÜMÜ <span>13</span></button>
+          <button data-roster-filter="starter" role="tab" aria-selected="false">AKTİF <span>9</span></button>
+          <button data-roster-filter="bench" role="tab" aria-selected="false">YEDEK <span>3</span></button>
+          <button data-roster-filter="injured" role="tab" aria-selected="false">IL <span>1</span></button>
+        </div>
+        <div class="roster-list" id="roster-list"></div>
+      </section>
+
+      <section id="profile-view" class="view-page" hidden>
+        <div class="page-title profile-title"><button class="back-button" data-view="feed">←</button><div><span class="eyebrow">KULLANICI HESABI</span><h1>Profilim</h1></div><button class="profile-edit-button" id="profile-edit-button">DÜZENLE</button></div>
+        <section class="profile-hero panel">
+          <div class="profile-avatar" id="profile-avatar">ED</div>
+          <div><span class="profile-role">TAKIM SAHİBİ</span><span class="profile-provider" id="profile-provider" hidden>Y! YAHOO BAĞLI</span><h2 id="profile-name">Eren Demir</h2><p id="profile-email">eren@fridayleague.com</p></div>
+          <span class="online-status"><i></i> AKTİF</span>
+        </section>
+        <section class="profile-team panel">
+          <div class="profile-team-head"><div><span class="eyebrow">TAKIMIM</span><h2 id="profile-team-name">Eren's Dynasty</h2></div><span class="profile-team-mark" id="profile-team-mark">ED</span></div>
+          <div class="profile-stats"><div><strong>8-2</strong><small>GALİBİYET</small></div><div><strong>1.</strong><small>SIRALAMA</small></div><div><strong>842</strong><small>HAFTA PUANI</small></div></div>
+          <button data-view="roster">TAKIMI VE KADROYU GÖR →</button>
+        </section>
+        <section class="profile-menu panel">
+          <button data-view="avatar"><span>▦</span><div><b>Premium avatarını seç</b><small>Hazır portre koleksiyonuna göz at</small></div><i>›</i></button>
+          <button id="account-details-button"><span>♙</span><div><b>Hesap bilgileri</b><small>Ad, e-posta ve takım bilgisi</small></div><i>›</i></button>
+          <button data-view="notifications"><span>◇</span><div><b>Bildirim tercihleri</b><small>Takas, maç ve lig uyarıları</small></div><i>›</i></button>
+          <button id="league-code-button"><span>#</span><div><b>Lig davet kodu</b><small>EMAC-2026 · Arkadaşlarını davet et</small></div><i>›</i></button>
+          <button id="install-app-button" hidden><span>▣</span><div><b>Uygulamayı telefona yükle</b><small>Ana ekrandan tam ekran kullan</small></div><i>↓</i></button>
+          <button id="security-button"><span>▣</span><div><b>Güvenlik</b><small>Şifre ve aktif oturumlar</small></div><i>›</i></button>
+          <a href="../admin/" target="_blank"><span>⚙</span><div><b>Yönetici paneli</b><small>Yalnızca lig yöneticileri</small></div><i>↗</i></a>
+        </section>
+        <section class="account-editor panel" id="account-editor" hidden>
+          <span class="eyebrow">HESABI DÜZENLE</span>
+          <label>AD SOYAD<input id="edit-user-name" /></label>
+          <label>E-POSTA<input id="edit-user-email" type="email" /></label>
+          <label>TAKIM ADI<input id="edit-team-name" /></label>
+          <div><button id="cancel-profile-edit">VAZGEÇ</button><button id="save-profile">KAYDET</button></div>
+        </section>
+        <button class="logout-button" id="logout-button">OTURUMU KAPAT</button>
+        <p class="app-version">E-MAC · SÜRÜM 1.0.0 · PWA</p>
+      </section>
     </main>
 
     <nav class="bottom-nav" aria-label="Ana menü">
       <button class="nav-item active" data-view="feed"><span>▤</span>HABERLER</button>
       <button class="nav-item" data-view="matchups"><span>▦</span>FİKSTÜR</button>
-      <button class="nav-item" data-view="teams"><span>♜</span>LİG</button>
-      <button class="nav-item" data-view="more"><span>⇄</span>TAKASLAR</button>
+      <button class="nav-item emac-nav" data-view="champions"><span>♛</span>E-MAC</button>
+      <button class="nav-item" data-view="trades"><span>⇄</span>TAKASLAR</button>
+      <button class="nav-item" data-view="roster"><span>♙</span>KADRO+</button>
     </nav>
     <div id="toast" class="toast" role="status"></div>
-    <script src="app.js"></script>
+    <script src="app.js?v=25"></script>
   </body>
 </html>

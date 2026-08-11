@@ -45,3 +45,13 @@ Backend şu Yahoo kaynaklarını okur:
 - Transactions
 
 İlk gerçek Yahoo yanıtı alındıktan sonra bu alanlar uygulamanın takım, eşleşme, puan durumu ve haber veri modeline dönüştürülecek.
+
+## 5. Yahoo ile kullanıcı girişi
+
+Giriş ekranındaki **Yahoo ile devam et** düğmesi aynı callback adresini OpenID Connect amacıyla kullanır. Akış `openid profile email` kapsamlarını, state/nonce korumasını ve Yahoo ID Token imza doğrulamasını içerir.
+
+Geliştirme callback adresi:
+
+`http://localhost:8787/auth/yahoo/callback`
+
+Yayın ortamında `YAHOO_REDIRECT_URI` HTTPS uygulama alan adına çevrilmeli ve Yahoo Developer uygulamasındaki callback adresiyle birebir aynı olmalıdır.

@@ -5,6 +5,7 @@ const crypto = require('node:crypto');
 
 const root = __dirname;
 const sessionPath = path.join(root, 'data', 'yahoo-session.json');
+const userSessionPath = path.join(root, 'data', 'yahoo-user-session.json');
 
 function loadEnv() {
   const envPath = path.join(root, '.env');
@@ -25,13 +26,46 @@ const config = {
   port: Number(process.env.PORT || 8787),
 };
 
-let oauthState = '';
+const oauthRequests = new Map();
 let session = fs.existsSync(sessionPath) ? JSON.parse(fs.readFileSync(sessionPath, 'utf8')) : null;
+let userSession = fs.existsSync(userSessionPath) ? JSON.parse(fs.readFileSync(userSessionPath, 'utf8')) : null;
 
 function saveSession(nextSession) {
   fs.mkdirSync(path.dirname(sessionPath), { recursive: true });
   session = nextSession;
   fs.writeFileSync(sessionPath, JSON.stringify(nextSession, null, 2));
+}
+
+function saveUserSession(nextSession) {
+  fs.mkdirSync(path.dirname(userSessionPath), { recursive: true });
+  userSession = nextSession;
+  fs.writeFileSync(userSessionPath, JSON.stringify(nextSession, null, 2));
+}
+
+function requestCookies(req) {
+  return Object.fromEntries((req.headers.cookie || '').split(';').map(part => part.trim().split('=').map(decodeURIComponent)).filter(parts => parts.length === 2));
+}
+
+async function yahooProfile(idToken, expectedNonce) {
+  if (!idToken) throw new Error('Yahoo ID Token dönmedi');
+  const parts = idToken.split('.');
+  if (parts.length !== 3) throw new Error('Geçersiz Yahoo ID Token');
+  const header = JSON.parse(Buffer.from(parts[0], 'base64url').toString('utf8'));
+  const claims = JSON.parse(Buffer.from(parts[1], 'base64url').toString('utf8'));
+  const certResponse = await fetch('https://api.login.yahoo.com/openid/v1/certs');
+  if (!certResponse.ok) throw new Error('Yahoo imza anahtarları alınamadı');
+  const { keys } = await certResponse.json();
+  const jwk = keys.find(key => key.kid === header.kid && key.alg === header.alg);
+  if (!jwk || !['ES256', 'RS256'].includes(header.alg)) throw new Error('Yahoo imza anahtarı geçersiz');
+  const algorithm = header.alg === 'ES256'
+    ? { name: 'ECDSA', namedCurve: 'P-256', hash: 'SHA-256' }
+    : { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' };
+  const key = await crypto.webcrypto.subtle.importKey('jwk', jwk, algorithm, false, ['verify']);
+  const verified = await crypto.webcrypto.subtle.verify(algorithm, key, Buffer.from(parts[2], 'base64url'), Buffer.from(`${parts[0]}.${parts[1]}`));
+  const audience = Array.isArray(claims.aud) ? claims.aud : [claims.aud];
+  const now = Math.floor(Date.now() / 1000);
+  if (!verified || claims.iss !== 'https://api.login.yahoo.com' || !audience.includes(config.clientId) || claims.exp <= now || claims.iat > now + 60 || claims.nonce !== expectedNonce) throw new Error('Yahoo kimlik doğrulaması başarısız');
+  return { id: claims.sub, name: claims.name || 'Yahoo Kullanıcısı', email: claims.email || null, picture: claims.picture || null };
 }
 
 function json(res, status, payload) {
@@ -88,9 +122,16 @@ async function dashboard() {
 
 function serveStatic(req, res) {
   const urlPath = new URL(req.url, 'http://localhost').pathname;
-  const target = path.resolve(root, urlPath === '/' ? 'index.html' : `.${urlPath}`);
+  const requestedPath = urlPath === '/' ? 'index.html' : `.${urlPath}`;
+  const resolvedPath = path.resolve(root, requestedPath);
+  const target = fs.existsSync(resolvedPath) && fs.statSync(resolvedPath).isDirectory()
+    ? path.join(resolvedPath, 'index.html')
+    : resolvedPath;
   if (!target.startsWith(root) || !fs.existsSync(target) || fs.statSync(target).isDirectory()) return false;
-  const type = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.json': 'application/json' }[path.extname(target)] || 'application/octet-stream';
+  const type = {
+    '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.json': 'application/json',
+    '.webmanifest': 'application/manifest+json', '.svg': 'image/svg+xml', '.png': 'image/png', '.webp': 'image/webp'
+  }[path.extname(target)] || 'application/octet-stream';
   res.writeHead(200, { 'Content-Type': `${type}; charset=utf-8` });
   fs.createReadStream(target).pipe(res);
   return true;
@@ -99,18 +140,39 @@ function serveStatic(req, res) {
 const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, `http://${req.headers.host}`);
   try {
-    if (url.pathname === '/api/yahoo/status') return json(res, 200, { configured: Boolean(config.clientId && config.clientSecret), connected: Boolean(session), leagueKey: config.leagueKey || null });
+    if (url.pathname === '/api/yahoo/status') return json(res, 200, { configured: Boolean(config.clientId && config.clientSecret), connected: Boolean(session), leagueKey: config.leagueKey || null, userConnected: Boolean(userSession?.profile) });
+    if (url.pathname === '/api/yahoo/user') {
+      if (!userSession?.profile) return json(res, 401, { error: 'Yahoo kullanıcı oturumu bulunamadı' });
+      return json(res, 200, { user: userSession.profile });
+    }
     if (url.pathname === '/auth/yahoo') {
       if (!config.clientId || !config.clientSecret) return json(res, 503, { error: '.env içinde Yahoo anahtarları eksik' });
-      oauthState = crypto.randomBytes(24).toString('hex');
+      const purpose = url.searchParams.get('purpose') === 'login' ? 'login' : 'fantasy';
+      const oauthRequest = { state: crypto.randomBytes(24).toString('hex'), nonce: crypto.randomBytes(20).toString('hex'), purpose, createdAt: Date.now() };
+      oauthRequests.set(oauthRequest.state, oauthRequest);
       const authUrl = new URL('https://api.login.yahoo.com/oauth2/request_auth');
-      authUrl.search = new URLSearchParams({ client_id: config.clientId, redirect_uri: config.redirectUri, response_type: 'code', state: oauthState }).toString();
-      res.writeHead(302, { Location: authUrl.toString() }); return res.end();
+      const authParams = { client_id: config.clientId, redirect_uri: config.redirectUri, response_type: 'code', state: oauthRequest.state, language: 'tr-tr' };
+      if (purpose === 'login') Object.assign(authParams, { scope: 'openid profile email', nonce: oauthRequest.nonce });
+      authUrl.search = new URLSearchParams(authParams).toString();
+      const secureCookie = config.redirectUri.startsWith('https://') ? '; Secure' : '';
+      res.writeHead(302, { Location: authUrl.toString(), 'Set-Cookie': `yahoo_oauth_state=${encodeURIComponent(oauthRequest.state)}; HttpOnly; SameSite=Lax; Path=/auth/yahoo; Max-Age=600${secureCookie}` }); return res.end();
     }
     if (url.pathname === '/auth/yahoo/callback') {
-      if (url.searchParams.get('state') !== oauthState) throw new Error('Geçersiz OAuth state');
+      const state = url.searchParams.get('state');
+      const oauthRequest = oauthRequests.get(state);
+      const cookieState = requestCookies(req).yahoo_oauth_state;
+      if (!oauthRequest || cookieState !== state || Date.now() - oauthRequest.createdAt > 10 * 60_000) throw new Error('Geçersiz veya süresi dolmuş OAuth state');
+      const purpose = oauthRequest.purpose;
+      oauthRequests.delete(state);
+      const clearStateCookie = 'yahoo_oauth_state=; HttpOnly; SameSite=Lax; Path=/auth/yahoo; Max-Age=0';
+      if (url.searchParams.get('error')) {
+        res.writeHead(302, { Location: `/?yahoo_login=denied&reason=${encodeURIComponent(url.searchParams.get('error'))}`, 'Set-Cookie': clearStateCookie }); return res.end();
+      }
       const token = await exchangeToken({ grant_type: 'authorization_code', redirect_uri: config.redirectUri, code: url.searchParams.get('code') });
-      saveSession(token); res.writeHead(302, { Location: '/?yahoo=connected' }); return res.end();
+      const profile = purpose === 'login' ? await yahooProfile(token.id_token, oauthRequest.nonce) : null;
+      if (purpose === 'login') saveUserSession({ ...token, profile, auth_purpose: purpose });
+      else saveSession({ ...token, auth_purpose: purpose });
+      res.writeHead(302, { Location: purpose === 'login' ? '/?yahoo_login=success' : '/?yahoo=connected', 'Set-Cookie': clearStateCookie }); return res.end();
     }
     if (url.pathname === '/api/yahoo/dashboard') return json(res, 200, await dashboard());
     if (!serveStatic(req, res)) json(res, 404, { error: 'Not found' });

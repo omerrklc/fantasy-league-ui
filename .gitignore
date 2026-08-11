@@ -1,3 +1,4 @@
 tools/github-cli/
 .env
 data/yahoo-session.json
+data/yahoo-user-session.json
