@@ -1,7 +1,7 @@
 const CACHE_NAME = 'emac-v28';
 const APP_SHELL = [
   './', './index.html', './styles.css?v=28', './emac.css?v=28', './emac-reference.css?v=28', './app.js?v=28', './manifest.webmanifest',
-  './assets/icons/icon-192.png', './assets/icons/icon-512.png', './assets/istanbul-night-v2.png', './assets/news/trade-night.webp', './assets/avatars/emac-premium-catalog-v1.png', './assets/avatars/emac-premium-catalog-v2.png', './assets/avatars/emac-player-roster-v1.png', './assets/avatars/emac-player-roster-v2.png'
+  './assets/icons/icon-192.png', './assets/icons/icon-512.png', './assets/istanbul-night-v2.webp', './assets/news/trade-night.webp', './assets/avatars/emac-premium-catalog-v1.png', './assets/avatars/emac-premium-catalog-v2.png', './assets/avatars/emac-player-roster-v1.png', './assets/avatars/emac-player-roster-v2.png'
 ];
 
 self.addEventListener('install', event => {
