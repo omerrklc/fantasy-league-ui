@@ -533,7 +533,7 @@ function premiumAvatar(config = defaultAvatar, label = 'E-MAC premium portresi')
 
 function renderChampions() {
   document.querySelector('#champions-list').innerHTML = champions.map((champion, index) => `<article class="champion-card ${index === 0 ? 'latest' : ''}">
-    <span class="champion-cup">${index === 0 ? '♛' : '♜'}</span><div class="champion-info"><small>${champion.place}</small><h2>${champion.name}</h2><strong>${champion.season}</strong><p>E-MAC CHAMPION</p></div><div class="champion-avatar">${catalogAvatar(champion.avatar, `${champion.name} avatarı`)}</div>
+    <span class="champion-cup basketball-trophy"><svg viewBox="0 0 64 78" aria-hidden="true"><circle cx="35" cy="19" r="15"/><path d="M29 34h12l5 27H21z"/><path d="M17 61h34v7H17zM12 69h44v7H12z"/><path class="trophy-seam" d="M22 12c8 5 17 13 22 22M35 4c-4 8-5 18-2 30M20 24c9-4 18-5 29-2"/></svg></span><div class="champion-info"><small>${champion.place}</small><h2>${champion.name}</h2><strong>${champion.season}</strong><p>E-MAC CHAMPION</p></div><div class="champion-avatar">${catalogAvatar(champion.avatar, `${champion.name} avatarı`)}</div>
   </article>`).join('');
 }
 
@@ -914,10 +914,10 @@ window.addEventListener('load', dismissSplash, { once: true });
 setTimeout(dismissSplash, 2500);
 
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
-  navigator.serviceWorker.register('./sw.js?v=32').then(registration => registration.update()).catch(() => {});
+  navigator.serviceWorker.register('./sw.js?v=33').then(registration => registration.update()).catch(() => {});
   navigator.serviceWorker.addEventListener('controllerchange', () => {
-    if (sessionStorage.getItem('emac-sw-v32')) return;
-    sessionStorage.setItem('emac-sw-v32', 'ready');
+    if (sessionStorage.getItem('emac-sw-v33')) return;
+    sessionStorage.setItem('emac-sw-v33', 'ready');
     location.reload();
   });
 }
