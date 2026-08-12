@@ -874,18 +874,28 @@ initializeUserSystem();
 
 // Progressive Web App and native-like mobile behaviors.
 const splash = document.querySelector('#app-splash');
-window.addEventListener('load', () => {
+let splashDismissed = false;
+function dismissSplash() {
+  if (!splash || splashDismissed) return;
+  splashDismissed = true;
+  splash.classList.add('hide');
+  setTimeout(() => { splash.hidden = true; }, 420);
+}
+function scheduleSplashDismissal() {
   setTimeout(() => {
-    splash.classList.add('hide');
-    setTimeout(() => { splash.hidden = true; }, 420);
+    dismissSplash();
   }, 650);
-});
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', scheduleSplashDismissal, { once: true });
+else scheduleSplashDismissal();
+window.addEventListener('load', dismissSplash, { once: true });
+setTimeout(dismissSplash, 2500);
 
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
-  navigator.serviceWorker.register('./sw.js?v=26').then(registration => registration.update()).catch(() => {});
+  navigator.serviceWorker.register('./sw.js?v=27').then(registration => registration.update()).catch(() => {});
   navigator.serviceWorker.addEventListener('controllerchange', () => {
-    if (sessionStorage.getItem('emac-sw-v25')) return;
-    sessionStorage.setItem('emac-sw-v25', 'ready');
+    if (sessionStorage.getItem('emac-sw-v27')) return;
+    sessionStorage.setItem('emac-sw-v27', 'ready');
     location.reload();
   });
 }

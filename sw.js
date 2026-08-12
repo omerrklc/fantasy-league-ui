@@ -1,6 +1,6 @@
-const CACHE_NAME = 'emac-v26';
+const CACHE_NAME = 'emac-v27';
 const APP_SHELL = [
-  './', './index.html', './styles.css?v=26', './emac.css?v=26', './emac-reference.css?v=26', './app.js?v=26', './manifest.webmanifest',
+  './', './index.html', './styles.css?v=27', './emac.css?v=27', './emac-reference.css?v=27', './app.js?v=27', './manifest.webmanifest',
   './assets/icons/icon-192.png', './assets/icons/icon-512.png', './assets/news/trade-night.webp', './assets/avatars/emac-premium-catalog-v1.png', './assets/avatars/emac-premium-catalog-v2.png', './assets/avatars/emac-player-roster-v1.png', './assets/avatars/emac-player-roster-v2.png'
 ];
 
