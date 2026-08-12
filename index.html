@@ -14,10 +14,10 @@
     <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css?v=27" />
-    <link rel="stylesheet" href="emac.css?v=27" />
-    <link rel="stylesheet" href="emac-reference.css?v=27" />
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=Press+Start+2P&family=Silkscreen:wght@400;700&family=VT323&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css?v=28" />
+    <link rel="stylesheet" href="emac.css?v=28" />
+    <link rel="stylesheet" href="emac-reference.css?v=28" />
   </head>
   <body>
     <div class="app-splash" id="app-splash" aria-label="Uygulama açılıyor">
@@ -62,9 +62,8 @@
         <button class="icon-button notification" data-view="notifications" aria-label="Bildirimler">◇<i></i><b id="notification-badge">4</b></button>
       </header>
 
-      <div class="arcade-skyline" aria-hidden="true">
-        <span class="moon"></span><i></i><i></i><i></i><i></i><i></i><i></i>
-        <b>BASKETBALL CITY</b>
+      <div class="arcade-skyline feed-istanbul-skyline" aria-hidden="true">
+        <img src="assets/istanbul-night-v2.png" alt="" />
       </div>
 
       <section class="league-picker" aria-label="Aktif lig">
@@ -173,33 +172,7 @@
       <section id="champions-view" class="view-page champions-view" hidden>
         <div class="champions-topline"><span>E-MAC</span><b>ŞAMPİYONLAR</b><i>P175</i></div>
         <div class="champion-skyline" aria-hidden="true">
-          <svg viewBox="0 0 390 170" shape-rendering="geometricPrecision">
-            <g class="sky-stars">
-              <path d="M28 20h3v5h5v3h-5v5h-3v-5h-5v-3h5zM270 16h3v6h6v3h-6v6h-3v-6h-6v-3h6zM352 29h2v4h4v2h-4v4h-2v-4h-4v-2h4z" />
-              <rect x="68" y="16" width="3" height="3"/><rect x="115" y="30" width="4" height="4"/><rect x="226" y="38" width="3" height="3"/><rect x="316" y="11" width="3" height="3"/>
-            </g>
-            <path class="sky-moon" d="M91 25h6v4h-3v9h3v4h-6v-3h-4V28h4z"/>
-            <g class="bridge">
-              <path class="neon-line" d="M3 103h121M14 61h12v42H14zm72 0h12v42H86zM9 70c21 0 27-26 39-26s20 26 43 26 23-18 33-18"/>
-              <path class="purple-line" d="M20 65v38M92 65v38M28 66l-5 37M36 58l-7 45M45 48l-8 55M55 49l8 54M65 58l6 45M75 66l4 37M101 66l5 37M111 58l3 45"/>
-              <rect class="city-gold" x="8" y="101" width="111" height="4"/><rect class="city-blue" x="18" y="81" width="3" height="3"/><rect class="city-blue" x="91" y="78" width="3" height="3"/>
-            </g>
-            <g class="ferry ferry-one"><path d="M96 100h40l-5 7h-30z"/><rect x="106" y="94" width="20" height="6"/><rect x="111" y="90" width="10" height="4"/><rect x="102" y="98" width="4" height="2"/></g>
-            <g class="maiden-tower">
-              <rect x="159" y="63" width="26" height="40"/><path d="M155 63h34l-6-8h-22zM163 54h18l-4-8h-10z"/><rect x="169" y="40" width="5" height="7"/><rect x="171" y="29" width="2" height="12"/>
-              <path class="flag" d="M173 29h13v7h-13z"/><circle cx="178" cy="32" r="2"/><rect class="window" x="165" y="70" width="5" height="8"/><rect class="window" x="175" y="70" width="5" height="8"/><rect class="window" x="168" y="87" width="7" height="10"/>
-              <rect class="city-gold" x="151" y="102" width="44" height="4"/>
-            </g>
-            <g class="ferry ferry-two"><path d="M204 101h48l-6 7h-36z"/><rect x="215" y="94" width="25" height="7"/><rect x="223" y="89" width="8" height="5"/><rect x="211" y="98" width="4" height="2"/></g>
-            <g class="mosque">
-              <path class="dome" d="M278 82c0-17 13-30 31-30s31 13 31 30z"/><rect x="277" y="81" width="64" height="23"/><path class="mini-dome" d="M266 88c0-9 7-16 16-16s16 7 16 16zm58 0c0-9 7-16 16-16s16 7 16 16z"/>
-              <g class="minaret"><rect x="261" y="43" width="5" height="61"/><path d="M259 43h9l-4-15z"/><rect x="257" y="54" width="13" height="4"/><rect x="354" y="37" width="5" height="67"/><path d="M352 37h9l-4-16z"/><rect x="350" y="50" width="13" height="4"/><rect x="370" y="50" width="4" height="54"/><path d="M368 50h8l-4-14z"/></g>
-              <rect class="window" x="289" y="87" width="5" height="9"/><rect class="window" x="306" y="87" width="5" height="9"/><rect class="window" x="323" y="87" width="5" height="9"/>
-              <path class="crescent" d="M307 44h5v3h-2v5h2v3h-5v-2h-3v-7h3z"/>
-            </g>
-            <g class="emac-hoop"><rect x="244" y="48" width="3" height="31"/><rect x="231" y="48" width="15" height="12"/><path d="M233 62h11l-3 7h-5z"/><circle cx="237" cy="42" r="5"/></g>
-            <g class="water-lines"><path d="M0 111h390M8 119h73m9 0h58m12 0h87m11 0h118M0 128h45m12 0h89m17 0h58m13 0h156M15 138h105m17 0h92m13 0h126M0 150h64m17 0h84m20 0h47m14 0h128"/><path class="reflection" d="M18 115h82M153 115h43M278 115h84M31 133h54M160 133h27M291 133h54M44 145h33M166 145h16M304 145h29"/></g>
-          </svg>
+          <img src="assets/istanbul-night-v2.png" alt="" />
         </div>
         <header class="champions-hero">
           <span class="eyebrow">E-MAC TARİHİ</span>
@@ -286,6 +259,6 @@
       <button class="nav-item" data-view="roster"><span>♙</span>KADRO+</button>
     </nav>
     <div id="toast" class="toast" role="status"></div>
-    <script src="app.js?v=27"></script>
+    <script src="app.js?v=28"></script>
   </body>
 </html>
