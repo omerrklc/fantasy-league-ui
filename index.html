@@ -9,15 +9,16 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="E-MAC" />
     <title>E-MAC — Fantasy Basketball</title>
+    <script>document.documentElement.dataset.theme=localStorage.getItem('emac-theme')==='light'?'light':'original';</script>
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="icon" href="assets/icons/icon-192.png" />
     <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=Press+Start+2P&family=Silkscreen:wght@400;700&family=VT323&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css?v=28" />
-    <link rel="stylesheet" href="emac.css?v=28" />
-    <link rel="stylesheet" href="emac-reference.css?v=28" />
+    <link rel="stylesheet" href="styles.css?v=29" />
+    <link rel="stylesheet" href="emac.css?v=29" />
+    <link rel="stylesheet" href="emac-reference.css?v=29" />
   </head>
   <body>
     <div class="app-splash" id="app-splash" aria-label="Uygulama açılıyor">
@@ -234,11 +235,19 @@
         <section class="profile-menu panel">
           <button data-view="avatar"><span>▦</span><div><b>Premium avatarını seç</b><small>Hazır portre koleksiyonuna göz at</small></div><i>›</i></button>
           <button id="account-details-button"><span>♙</span><div><b>Hesap bilgileri</b><small>Ad, e-posta ve takım bilgisi</small></div><i>›</i></button>
+          <button id="appearance-settings-button"><span>◐</span><div><b>Görünüm</b><small id="active-theme-label">Orijinal tema</small></div><i>›</i></button>
           <button data-view="notifications"><span>◇</span><div><b>Bildirim tercihleri</b><small>Maç, kadro ve lig uyarıları</small></div><i>›</i></button>
           <button id="league-code-button"><span>#</span><div><b>Lig davet kodu</b><small>EMAC-2026 · Arkadaşlarını davet et</small></div><i>›</i></button>
           <button id="install-app-button" hidden><span>▣</span><div><b>Uygulamayı telefona yükle</b><small>Ana ekrandan tam ekran kullan</small></div><i>↓</i></button>
           <button id="security-button"><span>▣</span><div><b>Güvenlik</b><small>Şifre ve aktif oturumlar</small></div><i>›</i></button>
           <a href="../admin/" target="_blank"><span>⚙</span><div><b>Yönetici paneli</b><small>Yalnızca lig yöneticileri</small></div><i>↗</i></a>
+        </section>
+        <section class="theme-settings panel" id="theme-settings" hidden aria-labelledby="theme-settings-title">
+          <div class="theme-settings-head"><div><span class="eyebrow">GÖRÜNÜM AYARLARI</span><h2 id="theme-settings-title">Temanı seç</h2></div><button id="close-theme-settings" type="button" aria-label="Tema ayarlarını kapat">×</button></div>
+          <div class="theme-options" role="radiogroup" aria-label="Uygulama teması">
+            <button class="theme-option" data-theme-choice="original" role="radio" aria-checked="true" type="button"><span class="theme-preview original-preview"><i></i><b>E-MAC</b><em></em></span><div><b>ORİJİNAL</b><small>İstanbul gecesi ve neon arcade renkleri</small></div><i>✓</i></button>
+            <button class="theme-option" data-theme-choice="light" role="radio" aria-checked="false" type="button"><span class="theme-preview light-preview"><i></i><b>E-MAC</b><em></em></span><div><b>AÇIK TEMA</b><small>Aydınlık zemin ve yüksek okunabilirlik</small></div><i>✓</i></button>
+          </div>
         </section>
         <section class="account-editor panel" id="account-editor" hidden>
           <span class="eyebrow">HESABI DÜZENLE</span>
@@ -259,6 +268,6 @@
       <button class="nav-item" data-view="roster"><span>♙</span>KADRO+</button>
     </nav>
     <div id="toast" class="toast" role="status"></div>
-    <script src="app.js?v=28"></script>
+    <script src="app.js?v=29"></script>
   </body>
 </html>

@@ -813,6 +813,28 @@ document.querySelector('#register-form').addEventListener('submit', event => {
 document.querySelector('#forgot-password').addEventListener('click', () => showToast('Şifre yenileme bağlantısı e-postana gönderildi'));
 document.querySelector('#profile-edit-button').addEventListener('click', () => document.querySelector('#account-editor').hidden = false);
 document.querySelector('#account-details-button').addEventListener('click', () => document.querySelector('#account-editor').hidden = false);
+const themeSettings = document.querySelector('#theme-settings');
+const themeMeta = document.querySelector('meta[name="theme-color"]');
+function applyTheme(theme, announce = false) {
+  const selectedTheme = theme === 'light' ? 'light' : 'original';
+  document.documentElement.dataset.theme = selectedTheme;
+  localStorage.setItem('emac-theme', selectedTheme);
+  themeMeta?.setAttribute('content', selectedTheme === 'light' ? '#f6f1dc' : '#05000f');
+  document.querySelector('#active-theme-label').textContent = selectedTheme === 'light' ? 'Açık tema' : 'Orijinal tema';
+  document.querySelectorAll('[data-theme-choice]').forEach(button => {
+    const selected = button.dataset.themeChoice === selectedTheme;
+    button.classList.toggle('selected', selected);
+    button.setAttribute('aria-checked', String(selected));
+  });
+  if (announce) showToast(selectedTheme === 'light' ? 'Açık tema uygulandı' : 'Orijinal tema uygulandı');
+}
+applyTheme(localStorage.getItem('emac-theme'));
+document.querySelector('#appearance-settings-button').addEventListener('click', () => {
+  themeSettings.hidden = false;
+  themeSettings.scrollIntoView({ behavior: 'smooth', block: 'center' });
+});
+document.querySelector('#close-theme-settings').addEventListener('click', () => { themeSettings.hidden = true; });
+document.querySelectorAll('[data-theme-choice]').forEach(button => button.addEventListener('click', () => applyTheme(button.dataset.themeChoice, true)));
 document.querySelector('#cancel-profile-edit').addEventListener('click', () => document.querySelector('#account-editor').hidden = true);
 document.querySelector('#save-profile').addEventListener('click', () => {
   currentUser = {
@@ -892,10 +914,10 @@ window.addEventListener('load', dismissSplash, { once: true });
 setTimeout(dismissSplash, 2500);
 
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
-  navigator.serviceWorker.register('./sw.js?v=28').then(registration => registration.update()).catch(() => {});
+  navigator.serviceWorker.register('./sw.js?v=29').then(registration => registration.update()).catch(() => {});
   navigator.serviceWorker.addEventListener('controllerchange', () => {
-    if (sessionStorage.getItem('emac-sw-v28')) return;
-    sessionStorage.setItem('emac-sw-v28', 'ready');
+    if (sessionStorage.getItem('emac-sw-v29')) return;
+    sessionStorage.setItem('emac-sw-v29', 'ready');
     location.reload();
   });
 }
