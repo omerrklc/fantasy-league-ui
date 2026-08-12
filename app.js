@@ -40,20 +40,12 @@ const schedule = [
 ];
 let weekIndex = schedule.length - 1;
 
-const trades = [
-  { id: 1, type: 'incoming', status: 'CEVAP BEKLİYOR', statusClass: 'incoming', from: "Eren's Dynasty", to: "Can's Crew", time: '18 dk önce', offered: [['JT','Jayson Tatum','SF · BOS','#278dff']], requested: [['SC','Stephen Curry','PG · GSW','#ffd51b']], note: 'Playoff öncesi iki takım için de dengeli bir hamle.', actions: true },
-  { id: 2, type: 'review', status: 'KOMİSER İNCELEMESİNDE', statusClass: 'review', from: 'Elite Squad', to: 'Bucket Getters', time: '2 saat önce', offered: [['LD','Luka Dončić','PG · LAL','#a63bd4']], requested: [['SG','Shai Gilgeous-Alexander','PG · OKC','#2c8cff'],['JJ','Jaren Jackson Jr.','PF · MEM','#df4dbd']], note: 'Oylama: 3 onay · 1 itiraz', actions: false },
-  { id: 3, type: 'finished', status: 'ONAYLANDI', statusClass: 'approved', from: 'Court Kings', to: 'Triple Double', time: 'Dün · 21.14', offered: [['TH','Tyrese Haliburton','PG · IND','#44d1da']], requested: [['JB','Jaylen Brown','SG · BOS','#ec536b']], note: 'Oyuncular yeni kadrolarına eklendi.', actions: false },
-  { id: 4, type: 'finished', status: 'REDDEDİLDİ', statusClass: 'rejected', from: "Can's Crew", to: 'Elite Squad', time: '3 gün önce', offered: [['MB','Malik Beasley','SG · DET','#ffcc21']], requested: [['BA','Bam Adebayo','C · MIA','#e04a7e']], note: 'Teklif takım sahibi tarafından reddedildi.', actions: false }
-];
-let activeTradeFilter = 'all';
-
 const notifications = [
-  { id: 1, type: 'trade', icon: '⇄', color: '#ffd51b', title: 'Yeni takas teklifi aldın', text: "Eren's Dynasty, Jayson Tatum karşılığında Stephen Curry'yi istiyor.", time: '18 dk önce', unread: true, target: 'trades', action: 'TEKLİFİ GÖR' },
+  { id: 1, type: 'trade', icon: '⇄', color: '#ffd51b', title: 'Yahoo’da yeni takas teklifi', text: "Eren's Dynasty, Jayson Tatum karşılığında Stephen Curry'yi istiyor.", time: '18 dk önce', unread: true, target: 'yahoo', action: 'YAHOO’DA AÇ' },
   { id: 2, type: 'match', icon: '▣', color: '#35df72', title: 'Eşleşmede öne geçtin', text: "Can's Crew karşısında skor 842-816. Haftanın bitmesine 1 gün kaldı.", time: '28 dk önce', unread: true, target: 'matchups', action: 'MAÇA GİT' },
   { id: 3, type: 'warning', icon: '!', color: '#ec4e72', title: 'Kadro kilidine 2 saat kaldı', text: 'Aktif kadronda oynamayan bir oyuncu bulunuyor. Kadronu kontrol et.', time: '1 saat önce', unread: true, target: 'roster', action: 'KADROYU GÖR' },
   { id: 4, type: 'news', icon: '✦', color: '#e64bd3', title: 'Haftanın derbisi açıklandı', text: 'Elite Squad ile Bucket Getters cumartesi 21.00’de karşılaşıyor.', time: '3 saat önce', unread: true, target: 'all-news', action: 'HABERİ OKU' },
-  { id: 5, type: 'trade', icon: '✓', color: '#36d972', title: 'Takas işlemi onaylandı', text: 'Court Kings ve Triple Double arasındaki takas komiser tarafından onaylandı.', time: 'Dün · 21.14', unread: false, target: 'trades', action: 'DETAYLAR' },
+  { id: 5, type: 'trade', icon: '✓', color: '#36d972', title: 'Yahoo takası onaylandı', text: 'Court Kings ve Triple Double arasındaki takas komiser tarafından onaylandı.', time: 'Dün · 21.14', unread: false, target: 'yahoo', action: 'YAHOO’DA AÇ' },
   { id: 6, type: 'match', icon: '★', color: '#288cff', title: 'Hafta 3 tamamlandı', text: "Eren's Dynasty haftayı lider tamamladı. Tüm sonuçlar eşleşmelerde.", time: 'Dün · 09.30', unread: false, target: 'matchups', action: 'SONUÇLARI GÖR' }
 ];
 let activeNotificationFilter = 'all';
@@ -180,23 +172,6 @@ function applyFilter(filter) {
 
 renderMatchups();
 
-function playerRows(players) {
-  return players.map(player => `<div class="trade-player"><span style="--player-color:${player[3]}">${player[0]}</span><p><b>${player[1]}</b><small>${player[2]}</small></p></div>`).join('');
-}
-
-function renderTrades() {
-  const visibleTrades = trades.filter(trade => activeTradeFilter === 'all' || trade.type === activeTradeFilter);
-  document.querySelector('#trade-list').innerHTML = visibleTrades.map(trade => `
-    <article class="trade-card panel" data-trade-id="${trade.id}">
-      <div class="trade-card-top"><span class="trade-status ${trade.statusClass}">${trade.status}</span><small>${trade.time}</small></div>
-      <div class="trade-teams"><span>${trade.from}</span><i>⇄</i><span>${trade.to}</span></div>
-      <div class="trade-assets"><div><em>GİDEN</em>${playerRows(trade.offered)}</div><div class="trade-divider">⇄</div><div><em>GELEN</em>${playerRows(trade.requested)}</div></div>
-      <div class="trade-card-bottom"><p>${trade.note}</p>${trade.actions ? '<div><button class="reject-trade" data-trade-action="reject">REDDET</button><button class="accept-trade" data-trade-action="accept">KABUL ET</button></div>' : '<button class="trade-detail" data-trade-action="detail">DETAYLAR →</button>'}</div>
-    </article>`).join('');
-}
-
-renderTrades();
-
 function updateNotificationCount() {
   const count = notifications.filter(item => item.unread).length;
   document.querySelector('#notification-badge').textContent = count;
@@ -303,7 +278,7 @@ document.querySelectorAll('[data-week-direction]').forEach(button => button.addE
 
 const toast = document.querySelector('#toast');
 function showToast(view) {
-  const labels = { feed: 'Akış sayfasındasın', matchups: 'Eşleşmeler açıldı', teams: 'Lig tablosu açıldı', trades: 'Takas Merkezi açıldı', champions: 'E-MAC şampiyonları açıldı', profile: 'Profilin açıldı', roster: 'Takım kadron açıldı' };
+  const labels = { feed: 'Akış sayfasındasın', matchups: 'Eşleşmeler açıldı', teams: 'Lig tablosu açıldı', champions: 'E-MAC şampiyonları açıldı', profile: 'Profilin açıldı', roster: 'Takım kadron açıldı' };
   toast.textContent = labels[view] || view; toast.classList.add('show');
   clearTimeout(window.toastTimer); window.toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
 }
@@ -603,8 +578,8 @@ renderAvatarStudio();
 
 document.querySelectorAll('[data-view]').forEach(button => button.addEventListener('click', () => {
   const view = button.dataset.view;
-  const pageId = { matchups: 'matchups-view', live: 'live-view', teams: 'teams-view', trades: 'trades-view', 'trade-compose': 'trade-compose-view', notifications: 'notifications-view', profile: 'profile-view', roster: 'roster-view', avatar: 'avatar-view', champions: 'champions-view', 'all-news': 'all-news-view' }[view];
-  const activeNav = ({ matchups: 'matchups', live: 'matchups', trades: 'trades', 'trade-compose': 'trades', champions: 'champions', roster: 'roster', profile: 'none', avatar: 'none' })[view] || 'feed';
+  const pageId = { matchups: 'matchups-view', live: 'live-view', teams: 'teams-view', notifications: 'notifications-view', profile: 'profile-view', roster: 'roster-view', avatar: 'avatar-view', champions: 'champions-view', 'all-news': 'all-news-view' }[view];
+  const activeNav = ({ matchups: 'matchups', live: 'matchups', champions: 'champions', roster: 'roster', profile: 'none', avatar: 'none' })[view] || 'feed';
   document.querySelectorAll('.nav-item').forEach(item => item.classList.toggle('active', item.dataset.view === activeNav));
   document.querySelectorAll('.app-shell > header, .app-shell > .arcade-skyline, .app-shell > .league-picker, .app-shell > section').forEach(item => {
     item.hidden = pageId ? item.id !== pageId : item.id.endsWith('-view');
@@ -647,7 +622,12 @@ document.querySelector('#notification-list').addEventListener('click', event => 
   const notification = notifications.find(item => item.id === Number(card.dataset.notificationId));
   notification.unread = false; renderNotifications();
   const target = event.target.closest('[data-notification-target]')?.dataset.notificationTarget;
-  if (target) document.querySelector(`[data-view="${target}"]`).click();
+  if (target === 'yahoo') {
+    window.open('https://basketball.fantasysports.yahoo.com/', '_blank', 'noopener,noreferrer');
+    showToast('Yahoo Fantasy yeni sekmede açıldı');
+  } else if (target) {
+    document.querySelector(`[data-view="${target}"]`)?.click();
+  }
 });
 
 document.querySelector('#notification-settings-button').addEventListener('click', () => {
@@ -662,37 +642,6 @@ document.querySelectorAll('[data-notification-setting]').forEach(input => {
     localStorage.setItem(`notification-${input.dataset.notificationSetting}`, input.checked);
     showToast(input.checked ? 'Bildirim açıldı' : 'Bildirim kapatıldı');
   });
-});
-
-document.querySelectorAll('[data-trade-filter]').forEach(button => button.addEventListener('click', () => {
-  activeTradeFilter = button.dataset.tradeFilter;
-  document.querySelectorAll('[data-trade-filter]').forEach(item => item.classList.toggle('selected', item === button));
-  renderTrades();
-}));
-
-document.querySelector('#trade-list').addEventListener('click', event => {
-  const button = event.target.closest('[data-trade-action]');
-  if (!button) return;
-  const card = button.closest('[data-trade-id]');
-  const trade = trades.find(item => item.id === Number(card.dataset.tradeId));
-  if (button.dataset.tradeAction === 'detail') return showToast('Takas ayrıntıları görüntüleniyor');
-  trade.actions = false; trade.type = 'finished';
-  if (button.dataset.tradeAction === 'accept') {
-    trade.status = 'KABUL EDİLDİ'; trade.statusClass = 'approved'; trade.note = 'Teklif kabul edildi ve komiser onayına gönderildi.';
-    showToast('Takas teklifi kabul edildi');
-  } else {
-    trade.status = 'REDDEDİLDİ'; trade.statusClass = 'rejected'; trade.note = 'Teklif tarafınızdan reddedildi.';
-    showToast('Takas teklifi reddedildi');
-  }
-  renderTrades();
-});
-
-document.querySelectorAll('[data-trade-add]').forEach(button => button.addEventListener('click', () => showToast(`${button.dataset.tradeAdd === 'send' ? 'Gönderilecek' : 'Alınacak'} oyuncu listesi açıldı`)));
-document.querySelector('#trade-note').addEventListener('input', event => document.querySelector('#trade-note-count').textContent = event.target.value.length);
-document.querySelector('#send-trade').addEventListener('click', () => {
-  trades.unshift({ id: Date.now(), type: 'review', status: 'CEVAP BEKLİYOR', statusClass: 'incoming', from: "Eren's Dynasty", to: document.querySelector('#trade-team').value, time: 'Şimdi', offered: [['JT','Jayson Tatum','SF · BOS','#278dff']], requested: [['SC','Stephen Curry','PG · GSW','#ffd51b']], note: document.querySelector('#trade-note').value || 'Yeni takas teklifi gönderildi.', actions: false });
-  activeTradeFilter = 'all'; renderTrades(); showToast('Takas teklifi gönderildi');
-  setTimeout(() => document.querySelector('[data-view="trades"]').click(), 550);
 });
 
 const yahooCard = document.querySelector('#yahoo-sync');
@@ -933,7 +882,7 @@ window.addEventListener('load', () => {
 });
 
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
-  navigator.serviceWorker.register('./sw.js?v=25').then(registration => registration.update()).catch(() => {});
+  navigator.serviceWorker.register('./sw.js?v=26').then(registration => registration.update()).catch(() => {});
   navigator.serviceWorker.addEventListener('controllerchange', () => {
     if (sessionStorage.getItem('emac-sw-v25')) return;
     sessionStorage.setItem('emac-sw-v25', 'ready');

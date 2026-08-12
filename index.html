@@ -15,9 +15,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css?v=25" />
-    <link rel="stylesheet" href="emac.css?v=25" />
-    <link rel="stylesheet" href="emac-reference.css?v=25" />
+    <link rel="stylesheet" href="styles.css?v=26" />
+    <link rel="stylesheet" href="emac.css?v=26" />
+    <link rel="stylesheet" href="emac-reference.css?v=26" />
   </head>
   <body>
     <div class="app-splash" id="app-splash" aria-label="Uygulama açılıyor">
@@ -31,7 +31,7 @@
       <div class="auth-stars" aria-hidden="true">+　·　+　·　+　·　+</div>
       <div class="auth-card">
         <div class="auth-brand"><span>◆</span><div><small>FANTASY BASKETBALL</small><strong>E-MAC</strong><b>ISTANBUL · 2026</b></div></div>
-        <div class="auth-copy"><span class="eyebrow">TAKIMINA GERİ DÖN</span><h1>Oyuna giriş yap</h1><p>Lig haberleri, eşleşmeler ve takasların tek yerde.</p></div>
+        <div class="auth-copy"><span class="eyebrow">TAKIMINA GERİ DÖN</span><h1>Oyuna giriş yap</h1><p>Lig haberleri, eşleşmeler ve kadron tek yerde.</p></div>
         <button class="yahoo-login-button" id="yahoo-login-button" type="button"><span>Y!</span><div><b>YAHOO İLE DEVAM ET</b><small>Fantasy hesabını güvenle bağla</small></div><i>→</i></button>
         <p class="yahoo-login-note" id="yahoo-login-note" hidden></p>
         <div class="auth-divider"><i></i><span>VEYA E-POSTA İLE</span><i></i></div>
@@ -157,37 +157,11 @@
         <div id="full-standings" class="standings panel full-standings"></div>
       </section>
 
-      <section id="trades-view" class="view-page" hidden>
-        <div class="page-title trades-title"><button class="back-button" data-view="feed">←</button><div><span class="eyebrow">E-MAC</span><h1>Takas Merkezi</h1></div><button class="new-trade-button" id="new-trade-button" data-view="trade-compose">＋ TEKLİF</button></div>
-        <div class="trade-summary panel"><div><span>⇄</span><p><b>TAKAS DÖNEMİ AÇIK</b><small>Son tarih · 28 Şubat 2027</small></p></div><strong><i></i> 3 AKTİF TEKLİF</strong></div>
-        <div class="trade-tabs"><button class="selected" data-trade-filter="all">TÜMÜ</button><button data-trade-filter="incoming">GELEN <span>1</span></button><button data-trade-filter="review">İNCELEMEDE</button><button data-trade-filter="finished">SONUÇLANDI</button></div>
-        <div id="trade-list" class="trade-list"></div>
-        <button class="trade-fab" id="trade-fab" data-view="trade-compose">＋ YENİ TAKAS TEKLİFİ</button>
-      </section>
-
-      <section id="trade-compose-view" class="view-page" hidden>
-        <div class="page-title"><button class="back-button" data-view="trades">←</button><div><span class="eyebrow">TAKAS MERKEZİ</span><h1>Yeni Teklif</h1></div></div>
-        <div class="compose-progress"><span class="active">1</span><i></i><span>2</span><i></i><span>3</span></div>
-        <section class="trade-builder panel">
-          <div class="builder-heading"><span class="eyebrow">TAKAS ORTAĞI</span><h2>Teklif göndereceğin takımı seç</h2></div>
-          <label class="trade-select-label">RAKİP TAKIM<select id="trade-team"><option>Elite Squad</option><option>Bucket Getters</option><option>Court Kings</option><option>Can's Crew</option></select></label>
-          <div class="trade-builder-grid">
-            <div class="trade-pick"><span class="trade-side-label">SEN GÖNDERİYORSUN</span><button class="player-select" id="send-player"><span class="player-avatar blue-player">JT</span><div><b>Jayson Tatum</b><small>SF · BOS · 46.8 FP</small></div><i>⌄</i></button><button class="add-player" data-trade-add="send">＋ OYUNCU EKLE</button></div>
-            <div class="trade-swap-icon">⇄</div>
-            <div class="trade-pick"><span class="trade-side-label">SEN ALIYORSUN</span><button class="player-select" id="receive-player"><span class="player-avatar yellow-player">SC</span><div><b>Stephen Curry</b><small>PG · GSW · 44.2 FP</small></div><i>⌄</i></button><button class="add-player" data-trade-add="receive">＋ OYUNCU EKLE</button></div>
-          </div>
-          <label class="trade-note-label">TEKLİF NOTU<textarea id="trade-note" maxlength="140" rows="3" placeholder="Rakip takım sahibine bir not yaz..."></textarea><small><span id="trade-note-count">0</span>/140</small></label>
-        </section>
-        <section class="trade-value panel"><div><span>TAKAS DENGESİ</span><strong>DENGELİ</strong></div><div class="value-bar"><i></i><b></b></div><p><span>46.8 FP</span> Her iki taraf için makul bir teklif <span>44.2 FP</span></p></section>
-        <button class="send-trade-button" id="send-trade">TAKAS TEKLİFİNİ GÖNDER →</button>
-      </section>
-
       <section id="notifications-view" class="view-page" hidden>
         <div class="page-title notification-title"><button class="back-button" data-view="feed">←</button><div><span class="eyebrow">E-MAC</span><h1>Bildirimler</h1></div><button class="notification-settings-button" id="notification-settings-button" aria-label="Bildirim ayarları">⚙</button></div>
         <div class="notification-actions"><div class="notification-filters"><button class="selected" data-notification-filter="all">TÜMÜ</button><button data-notification-filter="unread">OKUNMAMIŞ <span id="unread-filter-count">4</span></button></div><button id="mark-all-read">TÜMÜNÜ OKU ✓</button></div>
         <section class="notification-preferences panel" id="notification-preferences" hidden>
           <div><span class="eyebrow">BİLDİRİM AYARLARI</span><h2>Nelerden haberdar olacaksın?</h2></div>
-          <label><span><b>Takas hareketleri</b><small>Yeni teklifler ve komiser kararları</small></span><input type="checkbox" data-notification-setting="trade" checked /><i></i></label>
           <label><span><b>Canlı eşleşmeler</b><small>Maç başlangıcı ve skor değişimleri</small></span><input type="checkbox" data-notification-setting="match" checked /><i></i></label>
           <label><span><b>Lig haberleri</b><small>Son dakika ve önemli duyurular</small></span><input type="checkbox" data-notification-setting="news" checked /><i></i></label>
           <label><span><b>Ceza ve kadro uyarıları</b><small>Son tarih ve kadro ihlalleri</small></span><input type="checkbox" data-notification-setting="warning" checked /><i></i></label>
@@ -287,7 +261,7 @@
         <section class="profile-menu panel">
           <button data-view="avatar"><span>▦</span><div><b>Premium avatarını seç</b><small>Hazır portre koleksiyonuna göz at</small></div><i>›</i></button>
           <button id="account-details-button"><span>♙</span><div><b>Hesap bilgileri</b><small>Ad, e-posta ve takım bilgisi</small></div><i>›</i></button>
-          <button data-view="notifications"><span>◇</span><div><b>Bildirim tercihleri</b><small>Takas, maç ve lig uyarıları</small></div><i>›</i></button>
+          <button data-view="notifications"><span>◇</span><div><b>Bildirim tercihleri</b><small>Maç, kadro ve lig uyarıları</small></div><i>›</i></button>
           <button id="league-code-button"><span>#</span><div><b>Lig davet kodu</b><small>EMAC-2026 · Arkadaşlarını davet et</small></div><i>›</i></button>
           <button id="install-app-button" hidden><span>▣</span><div><b>Uygulamayı telefona yükle</b><small>Ana ekrandan tam ekran kullan</small></div><i>↓</i></button>
           <button id="security-button"><span>▣</span><div><b>Güvenlik</b><small>Şifre ve aktif oturumlar</small></div><i>›</i></button>
@@ -309,10 +283,9 @@
       <button class="nav-item active" data-view="feed"><span>▤</span>HABERLER</button>
       <button class="nav-item" data-view="matchups"><span>▦</span>FİKSTÜR</button>
       <button class="nav-item emac-nav" data-view="champions"><span>♛</span>E-MAC</button>
-      <button class="nav-item" data-view="trades"><span>⇄</span>TAKASLAR</button>
       <button class="nav-item" data-view="roster"><span>♙</span>KADRO+</button>
     </nav>
     <div id="toast" class="toast" role="status"></div>
-    <script src="app.js?v=25"></script>
+    <script src="app.js?v=26"></script>
   </body>
 </html>
