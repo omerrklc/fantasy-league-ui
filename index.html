@@ -16,9 +16,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=Press+Start+2P&family=Silkscreen:wght@400;700&family=VT323&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css?v=35" />
-    <link rel="stylesheet" href="emac.css?v=35" />
-    <link rel="stylesheet" href="emac-reference.css?v=35" />
+    <link rel="stylesheet" href="styles.css?v=36" />
+    <link rel="stylesheet" href="emac.css?v=36" />
+    <link rel="stylesheet" href="emac-reference.css?v=36" />
   </head>
   <body>
     <div class="app-splash" id="app-splash" aria-label="Uygulama açılıyor">
@@ -49,10 +49,11 @@
           <label>E-POSTA<input id="register-email" type="email" autocomplete="email" placeholder="ornek@email.com" required /></label>
           <label>ŞİFRE<span class="password-field"><input id="register-password" type="password" autocomplete="new-password" placeholder="En az 6 karakter" minlength="6" required /><button type="button" data-toggle-password="register-password">GÖR</button></span></label>
           <label>LİG DAVET KODU<input id="invite-code" maxlength="12" value="EMAC-2026" required /><small>Bu kodu lig yöneticisinden alabilirsin.</small></label>
-          <label class="auth-consent"><input id="auth-consent" type="checkbox" required /> Lig kurallarını ve kullanım koşullarını kabul ediyorum.</label>
+          <label class="auth-consent"><input id="auth-consent" type="checkbox" required /> <span><a href="terms.html" target="_blank" rel="noopener">Kullanım Koşulları</a> ile <a href="privacy.html" target="_blank" rel="noopener">Gizlilik Politikası</a>'nı kabul ediyorum.</span></label>
           <button class="auth-submit" type="submit">HESAP OLUŞTUR →</button>
         </form>
         <p class="auth-security">▣ Şifreli ve güvenli oturum</p>
+        <div class="auth-legal-links"><a href="privacy.html" target="_blank" rel="noopener">GİZLİLİK</a><i>·</i><a href="terms.html" target="_blank" rel="noopener">KULLANIM KOŞULLARI</a></div>
       </div>
     </section>
 
@@ -81,6 +82,7 @@
         </div>
         <button id="yahoo-connect" type="button">YAHOO'YA BAĞLAN</button>
       </section>
+      <p class="yahoo-attribution">Fantasy data provided by <a href="https://basketball.fantasysports.yahoo.com/" target="_blank" rel="noopener noreferrer">Yahoo Fantasy</a>. E-MAC, Yahoo ile bağlantılı veya Yahoo tarafından desteklenen bir ürün değildir.</p>
 
       <section class="matchup-card panel">
         <div class="eyebrow">CANLI EŞLEŞME <span>• HAFTA 4</span></div>
@@ -257,6 +259,7 @@
           <div><button id="cancel-profile-edit">VAZGEÇ</button><button id="save-profile">KAYDET</button></div>
         </section>
         <button class="logout-button" id="logout-button">OTURUMU KAPAT</button>
+        <div class="profile-legal-links"><a href="privacy.html">GİZLİLİK POLİTİKASI</a><i>·</i><a href="terms.html">KULLANIM KOŞULLARI</a><i>·</i><a href="mailto:omerrklc0@gmail.com">İLETİŞİM</a></div>
         <p class="app-version">E-MAC · SÜRÜM 1.0.0 · PWA</p>
       </section>
     </main>
@@ -268,6 +271,6 @@
       <button class="nav-item" data-view="roster"><span>♙</span>KADRO+</button>
     </nav>
     <div id="toast" class="toast" role="status"></div>
-    <script src="app.js?v=35"></script>
+    <script src="app.js?v=36"></script>
   </body>
 </html>

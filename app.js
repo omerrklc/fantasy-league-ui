@@ -915,10 +915,10 @@ window.addEventListener('load', dismissSplash, { once: true });
 setTimeout(dismissSplash, 2500);
 
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
-  navigator.serviceWorker.register('./sw.js?v=33').then(registration => registration.update()).catch(() => {});
+  navigator.serviceWorker.register('./sw.js?v=36').then(registration => registration.update()).catch(() => {});
   navigator.serviceWorker.addEventListener('controllerchange', () => {
-    if (sessionStorage.getItem('emac-sw-v33')) return;
-    sessionStorage.setItem('emac-sw-v33', 'ready');
+    if (sessionStorage.getItem('emac-sw-v36')) return;
+    sessionStorage.setItem('emac-sw-v36', 'ready');
     location.reload();
   });
 }

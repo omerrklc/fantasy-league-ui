@@ -1,7 +1,7 @@
 {
   "name": "E-MAC Fantasy Basketball",
   "short_name": "E-MAC",
-  "description": "Fantasy basketbol liginin haber, eşleşme, takas ve canlı skor merkezi.",
+  "description": "Fantasy basketbol liginin haber, eşleşme, kadro ve canlı skor merkezi.",
   "lang": "tr",
   "start_url": "./",
   "scope": "./",

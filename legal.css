@@ -1,0 +1,25 @@
+:root{color-scheme:dark;--bg:#05000f;--panel:#0b0220;--line:#652080;--text:#fff6d5;--muted:#b99ac7;--yellow:#ffdf27;--pink:#e23fcb;--blue:#3b98ff}
+*{box-sizing:border-box}
+html{max-width:100%;overflow-x:hidden;background:var(--bg)}
+body{margin:0;max-width:100%;min-height:100vh;overflow-x:hidden;background:radial-gradient(circle at 50% -10%,#250749 0,transparent 36%),var(--bg);color:var(--text);font-family:"Pixelify Sans",system-ui,sans-serif}
+a{color:var(--yellow)}
+.legal-shell{width:auto;max-width:760px;margin:0 16px;padding:34px 0 64px}
+.legal-top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:30px}
+.legal-brand{text-decoration:none;font-family:"Press Start 2P",monospace;font-size:18px;color:var(--yellow);text-shadow:3px 3px 0 #612064}
+.legal-back{border:1px solid var(--line);padding:10px 13px;text-decoration:none;font-family:"Press Start 2P",monospace;font-size:7px;color:var(--text);box-shadow:3px 3px 0 #2c0647}
+.legal-hero{border:2px solid var(--yellow);padding:25px 24px;margin-bottom:18px;background:#090018;box-shadow:6px 6px 0 #32104b}
+.legal-kicker,.legal-updated{font-family:"Press Start 2P",monospace;font-size:7px;letter-spacing:.4px}
+.legal-kicker{color:var(--pink)}
+.legal-hero h1{margin:14px 0 12px;overflow-wrap:anywhere;font:700 clamp(30px,7vw,54px)/.9 "Pixelify Sans",sans-serif;color:var(--yellow);text-transform:uppercase}
+.legal-hero p{max-width:610px;margin:0;color:var(--muted);font-size:17px;line-height:1.45}
+.legal-updated{display:block;margin-top:18px;color:var(--blue)}
+.legal-card{border:1px dashed var(--line);margin-top:14px;padding:20px 22px;background:rgba(9,0,24,.78)}
+.legal-card h2{margin:0 0 10px;font-size:22px;color:var(--yellow)}
+.legal-card p,.legal-card li{font-size:16px;line-height:1.55;color:#e6d9e9}
+.legal-card ul{padding-left:20px;margin-bottom:0}
+.legal-card strong{color:#fff}
+.legal-note{border-left:4px solid var(--pink)}
+.legal-footer{margin-top:26px;text-align:center;color:var(--muted);font:400 8px/1.7 "Press Start 2P",monospace}
+@media(min-width:793px){.legal-shell{margin-inline:auto}}
+@media(max-width:540px){.legal-shell{margin-inline:11px;padding-top:20px}.legal-top{flex-wrap:wrap;margin-bottom:20px}.legal-brand{font-size:14px}.legal-back{margin-left:auto;font-size:6px}.legal-hero,.legal-card{padding:18px 16px}.legal-card p,.legal-card li{font-size:15px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
