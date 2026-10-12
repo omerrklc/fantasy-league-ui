@@ -787,13 +787,13 @@ document.querySelector('#yahoo-login-button').addEventListener('click', async ()
     const response = await fetch('/api/yahoo/status', { cache: 'no-store' });
     const status = await response.json();
     if (!status.configured) {
-      note.textContent = 'Yahoo Developer onayı ve API anahtarları bekleniyor. Onay geldiğinde bu düğme gerçek Yahoo giriş ekranını açacak.';
+      note.textContent = 'Yahoo bağlantısı henüz sunucuda yapılandırılmadı.';
       note.hidden = false; button.disabled = false; button.querySelector('b').textContent = 'YAHOO İLE DEVAM ET';
       return;
     }
     location.assign('/auth/yahoo?purpose=login');
   } catch {
-    note.textContent = 'Yahoo giriş servisine ulaşılamadı. Yerel sunucunun açık olduğundan emin ol.';
+    note.textContent = 'Yahoo giriş servisine ulaşılamadı. Lütfen daha sonra tekrar dene.';
     note.hidden = false; button.disabled = false; button.querySelector('b').textContent = 'YAHOO İLE DEVAM ET';
   }
 });
@@ -852,7 +852,8 @@ document.querySelector('#league-code-button').addEventListener('click', async ()
   catch { showToast('Lig davet kodu: EMAC-2026'); }
 });
 document.querySelector('#security-button').addEventListener('click', () => showToast('Bu cihazdaki oturum güvenli ve aktif'));
-document.querySelector('#logout-button').addEventListener('click', () => {
+document.querySelector('#logout-button').addEventListener('click', async () => {
+  try { await fetch('/api/logout', { method: 'POST', keepalive: true }); } catch { /* Local demo has no backend session. */ }
   localStorage.removeItem('fantasy-session'); sessionStorage.removeItem('fantasy-session');
   showAuthentication(); showToast('Oturum kapatıldı');
 });

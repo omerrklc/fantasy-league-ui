@@ -1,57 +1,70 @@
-# Yahoo Fantasy entegrasyonu
+# Yahoo Fantasy ve kullanıcı girişi
 
-## 1. API erişimi başvurusu
+## Mevcut durum
 
-Başvuru: https://sports.yahoo.com/developer/access/
+- Yahoo Developer uygulaması Public Client olarak oluşturuldu.
+- Kullanıcı girişi Authorization Code + PKCE ile backend üzerinden çalışır.
+- OAuth state ve nonce doğrulanır; Yahoo ID Token imzası sunucuda kontrol edilir.
+- Yahoo erişim ve yenileme belirteçleri tarayıcıya veya kaynak koda yazılmaz.
+- Fantasy Sports verisi için Yahoo erişim başvurusunun ayrıca onaylanması gerekir.
 
-Önerilen bilgiler:
+## Yerel ortam
 
-- Product/App Name: `Fantasy League Media Center`
-- Website: `https://omerrklc.github.io/hamle-study/fantasy-league/`
-- Expected Users: İlk 3–6 ay için gerçekçi arkadaş ligi kullanıcı sayısı
-- Access: `Read-only`
-- Use case: `Private Yahoo Fantasy Basketball league data will be displayed in a companion media app. The app will read league metadata, fantasy teams, standings, weekly matchups and transactions to generate league news and visual recaps. It will not automate roster changes or wagering.`
-
-## 2. Anahtarları yerel ortama ekleme
-
-`.env.example` dosyasını `.env` adıyla kopyala ve Yahoo'nun verdiği değerleri gir:
+`.env.example` dosyasını `.env` adıyla kopyala:
 
 ```env
 YAHOO_CLIENT_ID=...
-YAHOO_CLIENT_SECRET=...
+YAHOO_CLIENT_SECRET=
 YAHOO_REDIRECT_URI=http://localhost:8787/auth/yahoo/callback
-YAHOO_LEAGUE_KEY=...
+YAHOO_LEAGUE_KEY=
 PORT=8787
+NODE_ENV=development
 ```
 
-Consumer Secret hiçbir zaman `app.js`, HTML veya GitHub deposuna yazılmamalı.
+Public Client kullanımında `YAHOO_CLIENT_SECRET` boş bırakılır. Secret hiçbir zaman HTML, `app.js` veya GitHub deposuna yazılmamalıdır.
 
-## 3. Yerel çalıştırma
+Uygulamayı çalıştır:
 
 ```powershell
 npm run dev
 ```
 
-Uygulamayı `http://localhost:8787` adresinden aç ve `Yahoo'ya Bağlan` düğmesine bas.
+## Canlı ortam
 
-## 4. Veri akışı
+Backend ve arayüz aynı Render web servisinden yayınlanır. Render ortam değişkenleri:
 
-Backend şu Yahoo kaynaklarını okur:
+```env
+YAHOO_CLIENT_ID=...
+YAHOO_CLIENT_SECRET=
+YAHOO_REDIRECT_URI=https://SERVIS-ADI.onrender.com/auth/yahoo/callback
+YAHOO_LEAGUE_KEY=
+NODE_ENV=production
+```
 
-- League metadata
-- Standings
-- Scoreboard / weekly matchups
-- Teams
-- Transactions
+Render servis adresi belli olduktan sonra `YAHOO_REDIRECT_URI` değeri Yahoo Developer uygulamasındaki Redirect URI ile birebir aynı olmalıdır.
 
-İlk gerçek Yahoo yanıtı alındıktan sonra bu alanlar uygulamanın takım, eşleşme, puan durumu ve haber veri modeline dönüştürülecek.
+## API uçları
 
-## 5. Yahoo ile kullanıcı girişi
+- `GET /healthz`: servis sağlık kontrolü
+- `GET /api/yahoo/status`: Yahoo bağlantı durumu
+- `GET /auth/yahoo?purpose=login`: Yahoo ile kullanıcı girişi
+- `GET /auth/yahoo/callback`: Yahoo OAuth dönüşü
+- `GET /api/yahoo/user`: giriş yapan kullanıcının doğrulanmış profili
+- `GET /api/yahoo/dashboard`: onay sonrasında Fantasy lig verileri
+- `POST /api/logout`: sunucu oturumunu kapatma
 
-Giriş ekranındaki **Yahoo ile devam et** düğmesi aynı callback adresini OpenID Connect amacıyla kullanır. Akış `openid profile email` kapsamlarını, state/nonce korumasını ve Yahoo ID Token imza doğrulamasını içerir.
+## Fantasy verileri
 
-Geliştirme callback adresi:
+Yahoo onayı geldiğinde backend şu kaynakları okuyacak:
 
-`http://localhost:8787/auth/yahoo/callback`
+- Lig bilgileri
+- Puan durumu
+- Haftalık eşleşmeler ve skor tablosu
+- Takımlar ve kadrolar
+- İşlem geçmişi
 
-Yayın ortamında `YAHOO_REDIRECT_URI` HTTPS uygulama alan adına çevrilmeli ve Yahoo Developer uygulamasındaki callback adresiyle birebir aynı olmalıdır.
+İlk gerçek Yahoo yanıtı alındıktan sonra bu veriler E-MAC arayüz modeline dönüştürülecek.
+
+## Bilinen geçici sınırlama
+
+Oturumlar şu anda sunucu belleğinde tutulur. Servis yeniden başladığında kullanıcıların yeniden giriş yapması gerekir. Üretim sürümünde kalıcı ve çoklu sunucuya uygun oturum deposu eklenmelidir.
